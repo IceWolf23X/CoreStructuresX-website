@@ -4,11 +4,11 @@ Static GitHub Pages website for CoreStructuresX, a Paper-only manual-start modul
 
 The site uses plain HTML, CSS, and JavaScript. FrameBaseCSS `1.2.0` supplies the theme and component foundation; Highlight.js `11.11.1` and the FrameBaseCSS addon highlight YAML examples. Released assets are pinned under `assets/vendor/`.
 
-No official CoreStructuresX image logo exists in the local project or current website repository. The site therefore uses an accessible text wordmark instead of inventing a logo asset.
+The CoreStructuresX logo preserves the CoreChatX mark geometry and uses a dedicated red palette, as requested for the CoreStructuresX brand.
 
 ## Pages
 
-- `index.html`: product overview.
+- `index.html`: product overview and links to the other CoreX plugins.
 - `features.html`: packs, markers, expansion, persistence, and safety.
 - `installation.html`: dependencies, file layout, validation, and first test.
 - `configuration.html`: global defaults, authoring contracts, commands, and permissions.

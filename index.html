@@ -7,13 +7,13 @@
 <meta content="CoreStructuresX provides manual-start modular structure generation for Paper servers using validated schematic packs, persistent connectors, and controlled expansion." name="description"/>
 <meta content="#2F3235" name="theme-color"/>
 <title>CoreStructuresX — Modular Structures for Paper Servers</title>
-<link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<link href="./assets/corestructuresx-logo.svg" rel="icon" type="image/svg+xml"/><link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
 <body>
 <a class="fb-skip-link" href="#main">Skip to content</a>
 <header class="fb-site-header fb-site-header--sticky">
 <div class="fb-container fb-container--wide fb-navbar">
 <a aria-label="CoreStructuresX home" class="fb-brand corex-brand" href="./index.html">
-<span aria-hidden="true" class="corex-wordmark">CSX</span><span>CoreStructuresX</span>
+<img alt="" height="36" src="./assets/corestructuresx-logo.svg" width="36"/><span>CoreStructuresX</span>
 </a>
 <button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
 <nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
@@ -24,6 +24,37 @@
 <main class="fb-main" id="main">
 <section class="fb-hero-section"><div class="fb-container fb-container--wide fb-hero corex-hero"><div class="fb-hero-copy"><p class="fb-eyebrow">Validated packs, controlled expansion</p><h1 class="fb-display">Build modular structures without world-generation hooks.</h1><p class="fb-lead">CoreStructuresX starts structures only when an administrator asks it to. It pastes marked WorldEdit or FAWE schematics in controlled jobs, saves connectors and triggers to JSON, and expands each instance in automatic or player-proximity mode.</p><div class="fb-cluster"><a class="fb-button" href="./installation.html">Install and prepare a pack</a><a class="fb-button fb-button--secondary" href="./features.html">Explore features</a></div><ul class="fb-cluster corex-facts"><li>Java 21+</li><li>Paper 1.21.11+</li><li>WorldEdit or FAWE</li><li>Manual start only</li></ul></div></div></section>
 <section class="fb-section"><div class="fb-container fb-container--wide"><div class="fb-section-header"><p class="fb-eyebrow">Designed for deliberate generation</p><h2>Server owners stay in control of when, where, and how structures grow.</h2></div><div class="fb-card-grid"><article class="fb-card fb-flow"><h3>Manual starts</h3><p>Use <code>/csx start</code> with a pack id and optional group, world position, facing, mode override, or debug output.</p></article><article class="fb-card fb-flow"><h3>Persistent instances</h3><p>Generated modules, connectors, triggers, commands, bounds, and state are stored in JSON rather than inferred from marker signs after restart.</p></article><article class="fb-card fb-flow"><h3>Safety checks</h3><p>Strict pack validation, transformed bounding boxes, overlap rejection, optional block whitelists, lookahead, fallbacks, and closing groups prevent uncontrolled placement.</p></article><article class="fb-card fb-flow"><h3>Stability controls</h3><p>Chunked pastes, per-instance job limits, TPS/MSPT gates, sample thresholds, and automatic delays keep expansion bounded.</p></article></div></div></section>
+<section class="fb-section fb-section--muted" id="also-try">
+<div class="fb-container fb-container--wide">
+<div class="fb-section-header">
+<p class="fb-eyebrow">Also try</p>
+<h2>More CoreX plugins for the same server stack.</h2>
+<p>Each project stays focused, so you can add only the systems your Paper server actually needs.</p>
+</div>
+<div class="fb-card-grid">
+<a aria-label="Open CoreArmorX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreArmorX-website/" rel="noopener noreferrer" target="_blank">
+<div><div aria-hidden="true"><img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreArmorX-website/assets/corearmorx-logo.svg" width="56"/></div><span>Armor</span></div>
+<h3>CoreArmorX</h3><p>Vanilla+ armor upgrade paths, netherite skins, metadata-safe conversions, and YAML control.</p><div>Open site <span aria-hidden="true">-&gt;</span></div>
+</a>
+<a aria-label="Open CoreToolsX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreToolsX-website/" rel="noopener noreferrer" target="_blank">
+<div><div aria-hidden="true"><img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreToolsX-website/assets/coretoolsx-logo.svg" width="56"/></div><span>Tools</span></div>
+<h3>CoreToolsX</h3><p>Vanilla+ tool upgrade paths, material skins, protected crafting, and admin-controlled recipes.</p><div>Open site <span aria-hidden="true">-&gt;</span></div>
+</a>
+<a aria-label="Open CoreCaseX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreCaseX-website/" rel="noopener noreferrer" target="_blank">
+<div><div aria-hidden="true"><img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreCaseX-website/assets/corecasex-logo.svg" width="56"/></div><span>Cases</span></div>
+<h3>CoreCaseX</h3><p>Structured player reports, staff triage, evidence, replies, notes, and resolution workflows.</p><div>Open site <span aria-hidden="true">-&gt;</span></div>
+</a>
+<a aria-label="Open CoreChatX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreChatX-website/" rel="noopener noreferrer" target="_blank">
+<div><div aria-hidden="true"><img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreChatX-website/assets/corechatx-logo.svg" width="56"/></div><span>Chat</span></div>
+<h3>CoreChatX</h3><p>Channels, private messages, pings, ChatItems, moderation, bridges, locales, and Velocity support.</p><div>Open site <span aria-hidden="true">-&gt;</span></div>
+</a>
+<a aria-label="Open CoreExtractionX website" class="fb-card fb-card--interactive corex-link-card" href="https://icewolf23x.github.io/CoreExtractionX-website/" rel="noopener noreferrer" target="_blank">
+<div><div aria-hidden="true"><img alt="" height="56" loading="lazy" src="https://icewolf23x.github.io/CoreExtractionX-website/assets/coreextractionx-logo.svg" width="56"/></div><span>Extraction</span></div>
+<h3>CoreExtractionX</h3><p>YAML-driven block extraction, block replacement, natural drops, and configurable extra item drops.</p><div>Open site <span aria-hidden="true">-&gt;</span></div>
+</a>
+</div>
+</div>
+</section>
 <section class="fb-section"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Start with validation</p><h2>Prepare a pack, run <code>/csx validate</code>, then start a test instance.</h2><div class="fb-cluster corex-center"><a class="fb-button" href="./installation.html">Open setup</a><a class="fb-button fb-button--secondary" href="./configuration.html">Read pack configuration</a></div></div></section>
 </main>
 <footer class="fb-site-footer">
@@ -31,7 +62,7 @@
 <div class="fb-grid fb-grid--2">
 <div class="fb-flow">
 <a class="fb-brand corex-brand" href="./index.html">
-<span aria-hidden="true" class="corex-wordmark">CSX</span><span>CoreStructuresX</span>
+<img alt="" height="36" src="./assets/corestructuresx-logo.svg" width="36"/><span>CoreStructuresX</span>
 </a>
 <p>Manual-start modular structures for Paper servers.</p>
 </div>

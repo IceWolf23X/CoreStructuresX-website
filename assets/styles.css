@@ -29,19 +29,6 @@ html {
   object-fit: contain;
 }
 
-.corex-wordmark {
-  display: grid;
-  width: 2.25rem;
-  height: 2.25rem;
-  place-items: center;
-  border: 1px solid var(--fb-color-primary);
-  border-radius: var(--fb-radius-md);
-  color: var(--fb-color-primary);
-  font-size: 0.7rem;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-}
-
 .corex-hero {
   grid-template-columns: minmax(0, 1fr);
   max-width: 78rem;

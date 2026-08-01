@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="CoreStructuresX configuration reference for global settings, marker signs, pack files, generation modes, commands, permissions, and runtime data." name="description"/><meta content="#2F3235" name="theme-color"/><title>Configuration — CoreStructuresX</title><link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<body><a class="fb-skip-link" href="#main">Skip to content</a><header class="fb-site-header fb-site-header--sticky">
+<div class="fb-container fb-container--wide fb-navbar">
+<a aria-label="CoreStructuresX home" class="fb-brand corex-brand" href="./index.html">
+<span aria-hidden="true" class="corex-wordmark">CSX</span><span>CoreStructuresX</span>
+</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
+<nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
+<ul class="fb-nav"><li><a href="./index.html">Overview</a></li><li><a href="./features.html">Features</a></li><li><a href="./installation.html">Setup</a></li><li><a href="./docs.html">Documentation</a></li><li><a href="./faq.html">FAQ</a></li><li><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></li></ul>
+</nav>
+</div>
+</header>
+<main class="fb-main" id="main"><header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Configuration reference</p><h1>Configure global safety once, then define each structure as a pack.</h1><p>The current runtime reads <code>config.yml</code> plus pack-owned <code>pack.yml</code>, <code>structure.yml</code>, <code>groups.yml</code>, optional <code>commands.yml</code>, and schematic files.</p></div></header>
+<section class="fb-section"><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell"><aside class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#global">Global defaults</a><a href="#markers">Marker signs</a><a href="#packs">Pack files</a><a href="#commands">Commands</a><a href="#permissions">Permissions</a><a href="#descriptor">Plugin descriptor</a><a href="#runtime">Runtime data</a></aside><article class="fb-doc-main fb-doc-content">
+<section id="global"><p class="fb-eyebrow">Global runtime</p><h2>Current bundled <code>config.yml</code></h2><p>Keep storage type <code>JSON</code>, connector and trigger saving enabled, and paste mode <code>CHUNKED</code>. Test any block budget or stability change on the target server.</p><div><div class="fb-code-block"><pre><code class="language-yaml">config-version: 1
+
+settings:
+  debug: false
+
+packs:
+  folder: packs
+
+markers:
+  header: "[CSX]"
+  case-insensitive-header: true
+  replacements:
+    ORIGIN: AIR
+    CONNECTOR: AIR
+    COMMAND: AIR
+
+storage:
+  type: JSON
+  folder: data/instances
+  save-connectors: true
+  save-triggers: true
+
+validation:
+  strict: true
+  require-origin: false
+  require-all-connectors-resolvable: true
+
+performance:
+  paste:
+    mode: CHUNKED
+    max-blocks-per-tick: 1500
+  stability:
+    pause-when-tps-below: 18.5
+    resume-when-tps-above: 19.5
+    pause-when-mspt-above: 45
+    resume-when-mspt-below: 35
+    stable-samples-required: 5
+    sample-interval-ticks: 20</code></pre></div></div></section>
+<section id="markers"><p class="fb-eyebrow">Schematic authoring</p><h2>Marker sign contract</h2><div class="fb-card-grid"><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>ORIGIN</h3><p>Line 1 <code>[CSX]</code>, line 2 <code>ORIGIN</code>. Zero markers uses the schematic clipboard origin fallback; more than one is invalid.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>CONNECTOR</h3><p>Line 2 <code>CONNECTOR</code>, line 3 a valid group id, and optional line 4 positive proximity radius. Each saved connector can generate at most one child module.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>COMMAND</h3><p>Line 2 <code>COMMAND</code>, line 3 a valid command-group id, and optional line 4 positive proximity radius. One weighted command entry runs from console.</p></article></div><p>Signs do not contain directions or dimensions. Rotation and transformed bounds come from the schematic and placement context.</p></section>
+<section id="packs"><p class="fb-eyebrow">Pack definitions</p><h2>Required files and responsibilities</h2><div aria-label="Scrollable table" class="fb-table-wrap" tabindex="0"><table class="fb-table--striped fb-table--comfortable"><thead><tr><th>File</th><th>Responsibility</th></tr></thead><tbody><tr><td><code>pack.yml</code></td><td>Pack version, id, display metadata, referenced YAML names, and schematics folder.</td></tr><tr><td><code>structure.yml</code></td><td>Start group, generation mode, automatic/proximity settings, lookahead, limits, closing, space checks, paste performance, native facing, and placement offset.</td></tr><tr><td><code>groups.yml</code></td><td>Weighted schematic entries, per-entry offsets and marker replacements, fallback groups, and closing groups.</td></tr><tr><td><code>commands.yml</code></td><td>Weighted console-command entries used by COMMAND markers. Required only when a schematic references a command group.</td></tr></tbody></table></div><div><div class="fb-code-block"><pre><code class="language-yaml">pack-version: 1
+id: abandoned_mine
+name: "Abandoned Mine"
+version: "1.0.0"
+author: "IceWolf23X"
+structure: structure.yml
+groups: groups.yml
+commands: commands.yml
+schematics-folder: schematics</code></pre></div></div><p>All ids must be filesystem-safe; weights must be positive; referenced groups and schematic files must exist. Completion requires no open connectors and no active jobs, so packs that can leave connectors open need closing groups with endpoint schematics.</p></section>
+<section id="commands"><p class="fb-eyebrow">Administration</p><h2>Commands</h2><div><div class="fb-code-block"><pre><code>/csx reload
+/csx validate
+/csx validate pack &lt;pack-id&gt;
+/csx packs list
+/csx start &lt;pack-id&gt; [group-id] [world x y z facing] [automatic|proximity &lt;default-radius&gt;] [debug] [actionbar]
+/csx instances list
+/csx instance info &lt;instance-id&gt;
+/csx instance pause &lt;instance-id&gt;
+/csx instance resume &lt;instance-id&gt;
+/csx instance stop &lt;instance-id&gt;</code></pre></div></div><p>Console starts require world, coordinates, and a cardinal facing. A player start without coordinates uses the player's block position and snaps yaw to a cardinal direction.</p></section>
+<section id="permissions"><p class="fb-eyebrow">Access control</p><h2>Permissions</h2><div><div class="fb-code-block"><pre><code>corestructuresx.admin
+corestructuresx.admin.reload
+corestructuresx.admin.validate
+corestructuresx.admin.packs
+corestructuresx.admin.start
+corestructuresx.admin.instances</code></pre></div></div><p>All permissions default to operators. Keep start permission limited because starting an instance pastes world content.</p></section>
+<section id="descriptor"><p class="fb-eyebrow">Paper descriptor</p><h2>Current bundled <code>plugin.yml</code></h2><p>This is the authoritative runtime declaration for the entry point, soft dependencies, command, and permission tree.</p><div><div class="fb-code-block"><pre><code class="language-yaml">name: CoreStructuresX
+main: com.corestudio.corestructuresx.CoreStructuresXPlugin
+version: ${project.version}
+api-version: '1.21'
+description: Manual-start modular structure generation for Paper servers.
+author: IceWolf23X
+prefix: CoreStructuresX
+softdepend:
+  - WorldEdit
+  - FastAsyncWorldEdit
+commands:
+  csx:
+    description: CoreStructuresX administration command.
+    usage: /csx
+permissions:
+  corestructuresx.admin:
+    description: Grants access to every CoreStructuresX administration command.
+    default: op
+    children:
+      corestructuresx.admin.reload: true
+      corestructuresx.admin.validate: true
+      corestructuresx.admin.packs: true
+      corestructuresx.admin.start: true
+      corestructuresx.admin.instances: true
+  corestructuresx.admin.reload:
+    default: op
+  corestructuresx.admin.validate:
+    default: op
+  corestructuresx.admin.packs:
+    default: op
+  corestructuresx.admin.start:
+    default: op
+  corestructuresx.admin.instances:
+    default: op</code></pre></div></div></section>
+<section id="runtime"><p class="fb-eyebrow">Persistence and reloads</p><h2>Protect active instance data.</h2><p><code>/csx reload</code> is intended for YAML and pack changes only when no paste job or automatic expansion is active. Pause affected instances first. Replacing jars, WorldEdit/FAWE, or the Paper version requires a restart.</p><p>Instance JSON under <code>data/instances/</code> is the source of truth after markers are replaced. Back it up before repair, and never delete corrupt JSON automatically.</p></section>
+</article></div></section>
+</main><footer class="fb-site-footer">
+<div class="fb-container fb-container--wide fb-stack">
+<div class="fb-grid fb-grid--2">
+<div class="fb-flow">
+<a class="fb-brand corex-brand" href="./index.html">
+<span aria-hidden="true" class="corex-wordmark">CSX</span><span>CoreStructuresX</span>
+</a>
+<p>Manual-start modular structures for Paper servers.</p>
+</div>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
+</div>
+<div class="fb-cluster corex-footer-meta">
+<span>Copyright 2026 CoreStructuresX.</span>
+<span>Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
+<a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Built with FrameBaseCSS</a>
+</div>
+</div>
+</footer><script src="./assets/vendor/highlightjs/highlight.min.js"></script><script src="./assets/vendor/highlightjs/languages/properties.min.js"></script><script src="./assets/site.js"></script></body>
+</html>

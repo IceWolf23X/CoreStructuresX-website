@@ -24,7 +24,29 @@
 <main class="fb-main" id="main">
 <section class="fb-hero-section"><div class="fb-container fb-container--wide fb-hero corex-hero"><div class="fb-hero-copy"><p class="fb-eyebrow">Validated packs, controlled expansion</p><h1 class="fb-display">Build modular structures without world-generation hooks.</h1><p class="fb-lead">CoreStructuresX starts structures only when an administrator asks it to. It pastes marked WorldEdit or FAWE schematics in controlled jobs, saves connectors and triggers to JSON, and expands each instance in automatic or player-proximity mode.</p><div class="fb-cluster"><a class="fb-button" href="./installation.html">Install and prepare a pack</a><a class="fb-button fb-button--secondary" href="./features.html">Explore features</a></div><ul class="fb-cluster corex-facts"><li>Java 21+</li><li>Paper 1.21.11+</li><li>WorldEdit or FAWE</li><li>Manual start only</li></ul></div></div></section>
 <section class="fb-section"><div class="fb-container fb-container--wide"><div class="fb-section-header"><p class="fb-eyebrow">Designed for deliberate generation</p><h2>Server owners stay in control of when, where, and how structures grow.</h2></div><div class="fb-card-grid"><article class="fb-card fb-flow"><h3>Manual starts</h3><p>Use <code>/csx start</code> with a pack id and optional group, world position, facing, mode override, or debug output.</p></article><article class="fb-card fb-flow"><h3>Persistent instances</h3><p>Generated modules, connectors, triggers, commands, bounds, and state are stored in JSON rather than inferred from marker signs after restart.</p></article><article class="fb-card fb-flow"><h3>Safety checks</h3><p>Strict pack validation, transformed bounding boxes, overlap rejection, optional block whitelists, lookahead, fallbacks, and closing groups prevent uncontrolled placement.</p></article><article class="fb-card fb-flow"><h3>Stability controls</h3><p>Chunked pastes, per-instance job limits, TPS/MSPT gates, sample thresholds, and automatic delays keep expansion bounded.</p></article></div></div></section>
-<section class="fb-section fb-section--muted" id="also-try">
+<section class="fb-section" aria-labelledby="usage-heading">
+<div class="fb-container fb-container--wide">
+<div class="fb-section-header">
+<p class="fb-eyebrow">Usage statistics</p>
+<h2 id="usage-heading">Live bStats data for Paper and Purpur.</h2>
+</div>
+<div class="fb-stack">
+<div class="fb-grid corex-metrics">
+<article class="fb-card">
+<h3>Paper / Purpur</h3>
+<div class="corex-metric-badges">
+<img src="https://icewolf23x.github.io/CoreX-Badges/corestructuresx/paper-servers.svg" alt="Current Paper and Purpur server count" loading="lazy">
+<img src="https://icewolf23x.github.io/CoreX-Badges/corestructuresx/paper-players.svg" alt="Current Paper and Purpur player count" loading="lazy">
+<img src="https://icewolf23x.github.io/CoreX-Badges/corestructuresx/paper-record-servers.svg" alt="Paper and Purpur server record" loading="lazy">
+<img src="https://icewolf23x.github.io/CoreX-Badges/corestructuresx/paper-record-players.svg" alt="Paper and Purpur player record" loading="lazy">
+</div>
+<img class="corex-metric-chart" src="https://icewolf23x.github.io/CoreX-Badges/corestructuresx/paper-chart.svg" alt="Paper and Purpur bStats usage chart" loading="lazy">
+</article>
+</div>
+<p class="fb-callout fb-callout--info">View the source dashboard on <a href="https://bstats.org/plugin/bukkit/CoreStructuresX" target="_blank" rel="noopener noreferrer">CoreStructuresX bStats</a>.</p>
+</div>
+</div>
+</section><section class="fb-section fb-section--muted" id="also-try">
 <div class="fb-container fb-container--wide">
 <div class="fb-section-header">
 <p class="fb-eyebrow">Also try</p>
@@ -70,7 +92,7 @@
 </div>
 <div class="fb-cluster corex-footer-meta">
 <span>Copyright 2026 CoreStructuresX.</span>
-<span>Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
+<span>Version 2026.1.0 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
 <a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Built with FrameBaseCSS</a>
 </div>
 </div>

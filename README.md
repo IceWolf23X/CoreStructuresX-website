@@ -8,7 +8,7 @@ The CoreStructuresX logo preserves the CoreChatX mark geometry and uses a dedica
 
 ## Pages
 
-- `index.html`: product overview and links to the other CoreX plugins.
+- `index.html`: product overview, live bStats badges and graph, and related CoreX plugins.
 - `features.html`: packs, markers, expansion, persistence, and safety.
 - `installation.html`: dependencies, file layout, validation, and first test.
 - `configuration.html`: global defaults, authoring contracts, commands, and permissions.

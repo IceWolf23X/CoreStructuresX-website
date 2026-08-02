@@ -1,22 +1,22 @@
 # CoreStructuresX Website
 
-Static GitHub Pages website for CoreStructuresX, a Paper-only manual-start modular structure generator built around validated WorldEdit/FAWE schematic packs.
+Static GitHub Pages website for CoreStructuresX, a Paper modular structure plugin built around validated WorldEdit and FAWE schematic packs.
 
-The site uses plain HTML, CSS, and JavaScript. FrameBaseCSS `1.2.0` supplies the theme and component foundation; Highlight.js `11.11.1` and the FrameBaseCSS addon highlight YAML examples. Released assets are pinned under `assets/vendor/`.
-
-The CoreStructuresX logo preserves the CoreChatX mark geometry and uses a dedicated red palette, as requested for the CoreStructuresX brand.
+<https://icewolf23x.github.io/CoreStructuresX-website/>
 
 ## Pages
 
-- `index.html`: product overview, live bStats badges and graph, and related CoreX plugins.
+- `index.html`: product overview, live bStats data, and related CoreX plugins.
 - `features.html`: packs, markers, expansion, persistence, and safety.
-- `installation.html`: dependencies, file layout, validation, and first test.
-- `configuration.html`: global defaults, authoring contracts, commands, and permissions.
+- `installation.html`: dependencies, file layout, validation, and first setup.
+- `configuration.html`: global defaults, pack format, commands, and permissions.
 - `docs.html`: documentation hub.
-- `faq.html`: startup, validation, placement, and persistence troubleshooting.
+- `faq.html`: common questions and troubleshooting.
 
-## Authoritative sources
+## Technology
 
-Keep technical claims aligned with `../plugin/CONFIGURATION_INSTRUCTIONS.md`, `../plugin/src/main/resources/`, `../plugin/src/main/resources/plugin.yml`, and current project-owned source/tests.
+The site uses plain HTML, CSS, JavaScript, and SVG. FrameBaseCSS `1.2.0` provides the layout and components. Highlight.js `11.11.1` highlights YAML examples. Required browser assets are stored under `assets/vendor/`.
 
-Backups named `CoreStructuresX-website-*-backup-*.zip` are local recovery artifacts and must not be published.
+## Local preview
+
+Serve the repository root with a static HTTP server and open `index.html`.

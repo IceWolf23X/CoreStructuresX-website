@@ -2,21 +2,19 @@
 
 ## Public pages
 
-- `index.html` — Landing page, manual-start structure overview, live CoreX-Badges metrics, and related CoreX plugin cards.
+- `index.html` — Product overview, live bStats data, and related CoreX plugins.
 - `features.html` — Packs, marker signs, expansion modes, commands, placement safety, and persistence.
 - `installation.html` — Runtime dependencies, folder layout, validation, and first controlled test.
-- `configuration.html` — Current global defaults, marker contract, pack files, commands, permissions, bundled Paper descriptor, and runtime-data rules.
-- `docs.html` — Documentation entry point and live-data warning.
-- `faq.html` — Dependency, validation, placement, expansion, reload, and JSON recovery help.
+- `configuration.html` — Global defaults, marker format, pack files, commands, permissions, and runtime data.
+- `docs.html` — Documentation entry point.
+- `faq.html` — Dependency, validation, placement, expansion, reload, and recovery help.
 
-## Shared assets and contracts
+## Shared assets
 
-- `assets/vendor/framebasecss/` — Unmodified pinned FrameBaseCSS 1.2.0 distribution and license.
-- `assets/vendor/highlightjs/` — Pinned Highlight.js 11.11.1 browser distribution and license.
-- `assets/corestructuresx-logo.svg` — Header, footer, favicon, and cross-site card logo using the CoreChatX geometry in red tones.
-- `assets/styles.css` — Shared CoreX layout and responsive bStats metric compositions built on FrameBaseCSS tokens.
-- `assets/site.js` — Responsive navigation and syntax-highlighting initialization.
-- `.gitignore` — Excludes local website backup archives from publication.
-- `README.md` — Site technology, page map, authoritative content sources, brand asset, and backup policy.
-
-Build output and `.git/` are intentionally excluded.
+- `assets/corestructuresx-logo.svg` — Header, footer, favicon, and related-plugin logo.
+- `assets/vendor/framebasecss/` — FrameBaseCSS distribution and license.
+- `assets/vendor/highlightjs/` — Highlight.js distribution and license.
+- `assets/styles.css` — CoreStructuresX layouts, bStats presentation, and responsive adjustments.
+- `assets/site.js` — Responsive navigation and syntax highlighting.
+- `.gitignore` — Local file exclusions.
+- `README.md` — Repository overview, page map, technology, and local preview instructions.

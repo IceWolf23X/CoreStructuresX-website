@@ -2,12 +2,13 @@
 
 ## Public pages
 
-- `index.html` — Product overview, live bStats data, and related CoreX plugins.
-- `features.html` — Packs, marker signs, expansion modes, commands, placement safety, and persistence.
-- `installation.html` — Runtime dependencies, folder layout, validation, and first controlled test.
-- `configuration.html` — Global defaults, marker format, pack files, commands, permissions, and runtime data.
-- `docs.html` — Documentation entry point.
-- `faq.html` — Dependency, validation, placement, expansion, reload, and recovery help.
+- `index.html` — Versioned product overview, cross-instance placement and shared-runtime safety summary, live bStats data, and related CoreX plugins.
+- `features.html` — Packs, marker signs, expansion modes, at-most-once commands, global placement safety, phased paste recovery, and operational boundaries.
+- `installation.html` — Runtime dependencies, current JAR name, folder layout, validation, and first controlled test.
+- `pack-authoring.html` — End-to-end pack creation guide covering module graphs, WorldEdit/FAWE schematics, marker signs, all pack YAML files, weighted/fallback/closing behavior, commands, safety, validation, troubleshooting, and production testing.
+- `configuration.html` — Current global limits, marker format, pack files, commands, permissions, atomic persistence, reload boundaries, and recovery policy.
+- `docs.html` — Documentation entry point linking setup, pack authoring, configuration, runtime concepts, troubleshooting, and transactional JSON recovery guidance.
+- `faq.html` — Dependency, validation, cross-instance placement, expansion, reload, and backup recovery help.
 
 ## Shared assets
 

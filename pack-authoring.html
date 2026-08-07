@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="Complete CoreStructuresX pack authoring guide: schematic planning, marker signs, YAML files, weighted groups, closing endpoints, commands, validation, and Paper testing." name="description"/><meta content="#2F3235" name="theme-color"/><title>Pack Authoring Guide — CoreStructuresX</title><link href="./assets/corestructuresx-logo.svg" rel="icon" type="image/svg+xml"/><link href="./assets/vendor/framebasecss/framebase.min.css" rel="stylesheet"/><link href="./assets/vendor/framebasecss/framebase-highlight.min.css" rel="stylesheet"/><link href="./assets/styles.css" rel="stylesheet"/></head>
+<body><a class="fb-skip-link" href="#main">Skip to content</a><header class="fb-site-header fb-site-header--sticky">
+<div class="fb-container fb-container--wide fb-navbar">
+<a aria-label="CoreStructuresX home" class="fb-brand corex-brand" href="./index.html">
+<img alt="" height="36" src="./assets/corestructuresx-logo.svg" width="36"/><span>CoreStructuresX</span>
+</a>
+<button aria-controls="site-navigation" aria-expanded="false" class="fb-button fb-button--ghost fb-nav-toggle" data-nav-toggle="" type="button">Menu</button>
+<nav aria-label="Main navigation" class="fb-nav-panel fb-nav-region" data-nav-panel="" data-open="false" id="site-navigation">
+<ul class="fb-nav"><li><a href="./index.html">Overview</a></li><li><a href="./features.html">Features</a></li><li><a href="./installation.html">Setup</a></li><li><a aria-current="page" href="./docs.html">Documentation</a></li><li><a href="./faq.html">FAQ</a></li><li><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></li></ul>
+</nav>
+</div>
+</header>
+<main class="fb-main" id="main">
+<header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Pack authoring guide</p><h1>Build a structure pack from the first schematic to a validated live test.</h1><p>This guide explains how modules connect, what every marker and YAML file controls, how fallback and closing paths work, and how to test a pack without leaving unresolved connectors or unsafe paste settings.</p></div></header>
+<section class="fb-section"><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell">
+<aside aria-label="Page contents" class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#model">How packs work</a><a href="#plan">Plan the graph</a><a href="#layout">Folder layout</a><a href="#schematics">Create schematics</a><a href="#markers">Marker signs</a><a href="#pack-yml">pack.yml</a><a href="#structure-yml">structure.yml</a><a href="#groups-yml">groups.yml</a><a href="#commands-yml">commands.yml</a><a href="#safety">Safety choices</a><a href="#validate">Validate and test</a><a href="#diagnose">Common failures</a><a href="#checklist">Release checklist</a></aside>
+<article class="fb-doc-main fb-doc-content">
+
+<section class="fb-doc-section" id="model">
+<p class="fb-eyebrow">Mental model</p><h2>A pack is a graph of reusable schematic modules.</h2>
+<p>An administrator starts one <strong>structure instance</strong> from the pack's start group. CoreStructuresX selects a weighted schematic from that group, pastes it, discovers its marker signs, and persists the resulting module, connectors, triggers, commands, and paste journal in instance JSON.</p>
+<p>Every <code>CONNECTOR</code> marker names the group that may provide its child module. That child is rotated and positioned by aligning its <code>ORIGIN</code> with the connector position plus the configured offset. A connector is one-shot: it becomes processing while its job is active, then used or closed after successful finalization.</p>
+<div class="fb-code-block"><pre><code>start.group
+  -&gt; entrance_01.schem
+      -&gt; CONNECTOR "corridor"
+          -&gt; corridor group: straight, corner, room, split
+              -&gt; fallback group when normal candidates cannot fit
+              -&gt; closing group with zero-connector endpoints</code></pre></div>
+<p>The pack files define future choices. Live instances are separate persisted state. Do not edit a pack or reload it while a paste job is queued, running, paused, or finalizing.</p>
+</section>
+
+<section class="fb-doc-section" id="plan">
+<p class="fb-eyebrow">Before building</p><h2>Plan the module graph before writing YAML.</h2>
+<ol>
+<li>Choose one pack id, such as <code>abandoned_mine</code>. Use the same id in the folder, <code>pack.yml</code>, and <code>structure.yml</code>.</li>
+<li>Choose a start group and at least one entrance schematic.</li>
+<li>List the reusable connector groups: for example <code>corridor</code>, <code>room</code>, <code>stairs</code>, or <code>branch</code>. These names are authored by you; they have no built-in meaning.</li>
+<li>Decide which smaller modules can act as fallbacks when a preferred candidate overlaps terrain or another module.</li>
+<li>Create endpoint schematics with zero <code>CONNECTOR</code> markers. Closing groups may contain only these endpoint modules.</li>
+<li>Decide whether every open connector must continue automatically or wait for a nearby player.</li>
+</ol>
+<p>Begin with one entrance, one repeatable path module, and one endpoint. Validate that small graph before adding rooms, splits, stairs, commands, lookahead, or parallel jobs.</p>
+</section>
+
+<section class="fb-doc-section" id="layout">
+<p class="fb-eyebrow">Pack directory</p><h2>Create the required files under the configured packs folder.</h2>
+<div class="fb-code-block"><pre><code>plugins/CoreStructuresX/packs/abandoned_mine/
+|-- pack.yml
+|-- structure.yml
+|-- groups.yml
+|-- commands.yml          # required only when COMMAND markers are used
+`-- schematics/
+    |-- entrance_01.schem
+    |-- corridor_01.schem
+    |-- corridor_small_01.schem
+    `-- collapsed_end_01.schem</code></pre></div>
+<p>Each pack contains exactly one <code>pack.yml</code>, one referenced structure file, one referenced groups file, and one schematics directory. Duplicate pack ids are invalid. A folder name different from the pack id can load with a warning, so matching them is the safest convention.</p>
+</section>
+
+<section class="fb-doc-section" id="schematics">
+<p class="fb-eyebrow">WorldEdit or FAWE</p><h2>Author each module as a deliberate bounding box.</h2>
+<ol>
+<li>Build the complete module in a staging world, including ordinary block entities such as containers, decorative signs, spawners, skulls, banners, or lecterns that must survive the paste.</li>
+<li>Place the CoreStructuresX marker signs described below. Prefer one explicit <code>ORIGIN</code> in every schematic.</li>
+<li>Make every connector sign face outward in the direction where the child module should grow. Do not write directions or dimensions on the sign.</li>
+<li>Select only the volume the module needs and save it as a Sponge <code>.schem</code> through WorldEdit or FAWE.</li>
+<li>Copy the file into the pack's <code>schematics/</code> directory and reference that exact filename in <code>groups.yml</code>.</li>
+</ol>
+<p>Overlap checks use the full schematic dimensions, including selected air, rather than only non-air blocks. Excess selection space can therefore reject placements that look visually empty.</p>
+<p>If no explicit <code>ORIGIN</code> exists, CoreStructuresX uses the clipboard origin saved in the schematic. Multiple origin markers are always invalid. If the saved origin already includes spacing outside the selection, avoid applying the same distance again through <code>placement.offset.forward</code>.</p>
+<p>Block-entity NBT is preserved for non-marker blocks. Schematic entities are optional and require <code>performance.paste.paste-entities: true</code>; test their position, rotation, and NBT on the exact Paper and WorldEdit/FAWE versions used in production.</p>
+</section>
+
+<section class="fb-doc-section" id="markers">
+<p class="fb-eyebrow">Sign contract</p><h2>Use only the three supported marker types.</h2>
+<div class="fb-card-grid">
+<article class="fb-card fb-flow"><h3>ORIGIN</h3><div class="fb-code-block"><pre><code>[CSX]
+ORIGIN</code></pre></div><p>Recommended once per schematic. It is the alignment point for child placement. Line 3 is ignored.</p></article>
+<article class="fb-card fb-flow"><h3>CONNECTOR</h3><div class="fb-code-block"><pre><code>[CSX]
+CONNECTOR
+corridor
+16</code></pre></div><p>Line 3 is a group id from <code>groups.yml</code>. Optional line 4 is a positive proximity radius. The sign facing defines expansion direction.</p></article>
+<article class="fb-card fb-flow"><h3>COMMAND</h3><div class="fb-code-block"><pre><code>[CSX]
+COMMAND
+spawn_loot
+8</code></pre></div><p>Line 3 is a command group from <code>commands.yml</code>. Optional line 4 controls its proximity trigger.</p></article>
+</div>
+<ul>
+<li>Line 1 must match the configured marker header; matching is case-insensitive by default.</li>
+<li>Do not use aliases such as <code>CONN</code>, <code>SPAWN</code>, <code>ENTRY</code>, <code>EXIT</code>, <code>ROOM</code>, or <code>NODE</code>.</li>
+<li>A blank line 4 uses the pack default radius in <code>PLAYER_PROXIMITY</code> mode. A nonblank zero, negative, or malformed value is invalid.</li>
+<li>Every proximity connector needs either an explicit positive radius or a positive pack default.</li>
+<li>Marker blocks are replaced during paste. Connectors and triggers continue from JSON even after the sign disappears.</li>
+</ul>
+</section>
+
+<section class="fb-doc-section" id="pack-yml">
+<p class="fb-eyebrow">Pack manifest</p><h2>Describe the pack and point to its files.</h2>
+<div class="fb-code-block"><pre><code class="language-yaml">pack-version: 1
+id: abandoned_mine
+name: "Abandoned Mine"
+version: "1.0.0"
+author: "YourName"
+structure: structure.yml
+groups: groups.yml
+commands: commands.yml
+schematics-folder: schematics</code></pre></div>
+<ul><li><code>pack-version</code> must be <code>1</code>.</li><li>The id must be filesystem-safe and unique across loaded packs.</li><li>Referenced files and the schematics folder must exist.</li><li><code>commands.yml</code> may be omitted only when no schematic uses a <code>COMMAND</code> marker.</li></ul>
+</section>
+
+<section class="fb-doc-section" id="structure-yml">
+<p class="fb-eyebrow">Generation policy</p><h2>Configure start, placement, limits, checks, and paste behavior.</h2>
+<div class="fb-code-block"><pre><code class="language-yaml">structure-version: 1
+id: abandoned_mine
+enabled: true
+
+start:
+  mode: MANUAL
+  group: entrance
+
+placement:
+  native-facing: SOUTH
+  offset:
+    forward: 1
+    left: 0
+    right: 0
+    up: 0
+
+generation:
+  mode: AUTOMATIC
+  automatic:
+    connector-order:
+      primary: NEAREST_TO_ORIGIN
+      secondary: FIFO
+    job-delay: 40
+  lookahead:
+    enabled: true
+    depth: 1
+    connector-policy: ALL_CONNECTORS
+  recovery:
+    backtrack-on-blocked: false
+  player-proximity:
+    check-interval: 20t
+    default-radius: 16
+  limits:
+    max-modules: 150
+    max-radius: 300
+    max-open-connectors: 40
+  completion:
+    require-all-connectors-resolved: true
+    enter-closing-when-limits-reached: true
+
+space-check:
+  overlap:
+    mode: SCHEMATIC_BOUNDING_BOX
+    padding: 0
+    double-pass-block-check: false
+  block-check:
+    enabled: true
+    mode: WHITELIST
+    replaceable:
+      - AIR
+      - CAVE_AIR
+      - STONE
+      - DEEPSLATE
+      - TUFF
+  post-paste-replacements:
+    REDSTONE_BLOCK: AIR
+
+performance:
+  paste:
+    mode: CHUNKED
+    max-blocks-per-tick: 1500
+    paste-air: false
+    paste-entities: false
+    max-active-jobs-per-instance: 1</code></pre></div>
+<h3>Start and facing</h3>
+<p><code>start.mode</code> must remain <code>MANUAL</code> in version 1. <code>start.group</code> must exist. <code>native-facing</code> is the forward direction used while authoring the schematics and accepts <code>NORTH</code>, <code>EAST</code>, <code>SOUTH</code>, or <code>WEST</code>.</p>
+<h3>Placement offset</h3>
+<p>The default <code>forward: 1</code> places a child origin one block beyond its parent connector, which prevents touching marker positions from making the two full bounding boxes overlap. Horizontal values must be zero or positive; <code>up</code> may also be negative. Offsets affect connector expansion, not the initial manual start position.</p>
+<h3>Generation mode</h3>
+<p><code>AUTOMATIC</code> processes open connectors after the configured stable delay. To make expansion player-driven, change the mode and keep a positive trigger radius:</p>
+<div class="fb-code-block"><pre><code class="language-yaml">generation:
+  mode: PLAYER_PROXIMITY
+  player-proximity:
+    check-interval: 20t
+    default-radius: 16</code></pre></div>
+<p>Each saved trigger activates only its own connector. The player must be in the same world. Proximity jobs still obey the global stability governor and placement checks.</p>
+</section>
+
+<section class="fb-doc-section" id="groups-yml">
+<p class="fb-eyebrow">Module selection</p><h2>Map marker group ids to weighted candidates and safe exits.</h2>
+<div class="fb-code-block"><pre><code class="language-yaml">groups-version: 1
+
+groups:
+  entrance:
+    entries:
+      - schematic: entrance_01.schem
+        weight: 100
+
+  corridor:
+    entries:
+      - schematic: corridor_01.schem
+        weight: 80
+      - schematic: corridor_small_01.schem
+        weight: 20
+        offset:
+          forward: 0
+          left: 0
+          right: 0
+          up: 0
+        replacements:
+          CONNECTOR: LIGHT_GRAY_CONCRETE
+    fallback-groups:
+      - corridor_fallback
+    closing-groups:
+      - corridor_end
+
+  corridor_fallback:
+    entries:
+      - schematic: corridor_small_01.schem
+        weight: 100
+    closing-groups:
+      - corridor_end
+
+  corridor_end:
+    entries:
+      - schematic: collapsed_end_01.schem
+        weight: 100</code></pre></div>
+<h3>Weights</h3><p>Weights are positive relative values, not required percentages. An <code>80</code>/<code>20</code> pair expresses a four-to-one preference while preserving the existing weighted-selection behavior.</p>
+<h3>Fallback groups</h3><p>The connector's primary group is tried first. If every candidate fails placement or preflight, fallback groups are tried in their listed order. If all permitted candidates fail, the connector becomes <code>BLOCKED</code>; already generated modules are retained.</p>
+<h3>Closing groups</h3><p>When limits cause the instance to enter <code>CLOSING</code>, each remaining connector uses its closing groups. Every schematic reachable from a closing group must be an endpoint with zero <code>CONNECTOR</code> markers. Completion is possible only when every connector is used or closed and no active or recoverable job remains.</p>
+<h3>Per-entry controls</h3>
+<ul><li><code>offset</code> replaces the pack placement offset only for that schematic entry.</li><li><code>replacements</code> may override <code>ORIGIN</code>, <code>CONNECTOR</code>, or <code>COMMAND</code> marker replacement materials. Omitted keys keep global values.</li><li><code>allow-overlap-with-parent: true</code> is intended only for small detail modules deliberately pasted inside their direct parent. It never permits overlap with unrelated modules or pending jobs, and the block whitelist still applies.</li></ul>
+</section>
+
+<section class="fb-doc-section" id="commands-yml">
+<p class="fb-eyebrow">Optional post-paste actions</p><h2>Connect COMMAND markers to weighted console command groups.</h2>
+<div class="fb-code-block"><pre><code class="language-yaml">commands-version: 1
+
+groups:
+  spawn_loot:
+    entries:
+      - weight: 8
+        commands:
+          - "loot spawn {x} {y} {z} loot minecraft:chests/simple_dungeon"
+      - weight: 2
+        commands:
+          rare: "loot spawn {x} {y} {z} loot minecraft:chests/ancient_city"</code></pre></div>
+<p>Each marker selects one weighted entry. That entry may contain one command, a list, or a named map. Commands run as console after durable module finalization in automatic mode, or when the marker's saved trigger activates in proximity mode.</p>
+<p>Available placeholders include <code>{world}</code>, transformed <code>{x}</code>/<code>{y}</code>/<code>{z}</code> and signed offsets such as <code>{y+1}</code>, plus <code>{instance}</code>, <code>{module}</code>, <code>{schematic}</code>, <code>{group}</code>, <code>{source_group}</code>, <code>{uuid}</code>, and structure-origin coordinates.</p>
+<p>Dispatch is at-most-once: the command record is marked consumed and persisted before Paper receives the command. A crash in that narrow interval can skip the command, but CoreStructuresX will not intentionally replay an external side effect after restart.</p>
+</section>
+
+<section class="fb-doc-section" id="safety">
+<p class="fb-eyebrow">Placement safety</p><h2>Start conservative, then loosen only the check that blocks an intentional design.</h2>
+<div class="fb-card-grid">
+<article class="fb-card fb-flow"><h3>Bounding boxes</h3><p><code>SCHEMATIC_BOUNDING_BOX</code> protects generated modules and queued, running, or paused jobs across every structure instance in the same world. Reduce excess schematic air before adding exceptions.</p></article>
+<article class="fb-card fb-flow"><h3>Block whitelist</h3><p>When enabled, every target paste block must currently be one of the listed materials. Include only terrain the structure is meant to replace.</p></article>
+<article class="fb-card fb-flow"><h3>Lookahead</h3><p>Start at depth <code>1</code>. <code>ALL_CONNECTORS</code> requires every new connector to have a simulated continuation; <code>ANY_CONNECTOR</code> requires at least one. Global node and time limits bound the search.</p></article>
+<article class="fb-card fb-flow"><h3>Projected limits</h3><p>Pending jobs and the connectors they will create count toward module and open-connector caps. Candidates are rejected before paste when their projected result exceeds a hard limit.</p></article>
+</div>
+<ul><li>Keep <code>generation.recovery.backtrack-on-blocked: false</code>. Setting it to true is rejected because the prior world, NBT, entities, commands, and later player changes cannot be restored losslessly.</li><li>Keep <code>max-active-jobs-per-instance: 1</code> until the pack works correctly in serial execution.</li><li>Enable double-pass overlap only together with block checking and a deliberate replaceable whitelist. It cannot bypass pending jobs.</li><li>Use <code>post-paste-replacements</code> for temporary authoring blocks that should not remain in the final world.</li></ul>
+</section>
+
+<section class="fb-doc-section" id="validate">
+<p class="fb-eyebrow">Controlled rollout</p><h2>Reload, validate, inspect, and only then expand.</h2>
+<ol>
+<li>Make sure no paste job is queued, running, paused, or finalizing.</li>
+<li>Reload pack definitions and validate the exact pack:</li>
+</ol>
+<div class="fb-code-block"><pre><code>/csx reload
+/csx validate pack abandoned_mine
+/csx packs list</code></pre></div>
+<ol start="3">
+<li>Fix every reported file path, field, group, marker, schematic, limit, or closing-group error.</li>
+<li>Start a small instance in an empty staging area with debug and actionbar feedback:</li>
+</ol>
+<div class="fb-code-block"><pre><code>/csx start abandoned_mine automatic debug actionbar</code></pre></div>
+<ol start="5">
+<li>Read the returned instance id and inspect it while it expands:</li>
+</ol>
+<div class="fb-code-block"><pre><code>/csx instance info &lt;instance-id&gt;
+/csx instance pause &lt;instance-id&gt;
+/csx instance resume &lt;instance-id&gt;</code></pre></div>
+<p>Use destructive stop only after paste work has finished. Reload and stop operations are rejected while abandoning a paste could leave world and journal state inconsistent.</p>
+</section>
+
+<section class="fb-doc-section" id="diagnose">
+<p class="fb-eyebrow">Troubleshooting</p><h2>Read the first concrete validation or blocked reason.</h2>
+<div aria-label="Scrollable table" class="fb-table-wrap" tabindex="0"><table class="fb-table--striped fb-table--comfortable"><thead><tr><th>Symptom</th><th>Check first</th><th>Typical correction</th></tr></thead><tbody>
+<tr><td>Pack is not listed</td><td>Folder location, manifest id, duplicate ids</td><td>Place it under <code>packs/</code>, match the folder and id, then reload.</td></tr>
+<tr><td>Schematic is invalid</td><td>Origin count, marker type, line 3 group, line 4 radius</td><td>Use zero or one origin, a real group id, and only blank or positive marker radii.</td></tr>
+<tr><td>Candidate overlaps</td><td>Full selection bounds and nearby pending jobs</td><td>Shrink excess air, move markers, add a smaller fallback, or use a carefully bounded parent-detail exception.</td></tr>
+<tr><td>Block whitelist rejects</td><td>The first target material outside <code>replaceable</code></td><td>Add only intentionally replaceable terrain or move the test location.</td></tr>
+<tr><td>Lookahead rejects</td><td>Next-step space, connector policy, fallback endpoints</td><td>Add smaller continuations, start at depth 1, or choose <code>ANY_CONNECTOR</code> only when partial continuation is intended.</td></tr>
+<tr><td>Instance becomes BLOCKED</td><td><code>/csx instance info</code>, connector reason, limits</td><td>Repair the primary/fallback/closing graph; do not enable destructive backtracking.</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="fb-doc-section" id="checklist">
+<p class="fb-eyebrow">Before production</p><h2>Prove the complete pack, not only the first module.</h2>
+<ul>
+<li><code>/csx validate</code> reports zero errors and <code>/csx packs list</code> marks the pack valid.</li>
+<li>Every connector line 3 resolves to a group; every command marker resolves to a command group.</li>
+<li>Every closing path reaches only zero-connector endpoint schematics.</li>
+<li>Every enabled rotation preserves rails, stairs, wall connections, containers, decorative signs, spawners, skulls, banners, and lecterns used by the pack.</li>
+<li>Automatic delay and proximity triggers behave correctly after a restart.</li>
+<li>Fallbacks handle tight terrain and lookahead rejection without leaving avoidable blocked connectors.</li>
+<li>Module, radius, connector, block, chunk-load, time, and lookahead limits are tested with the largest intended structure.</li>
+<li>Optional schematic entities are tested on the target Paper and WorldEdit/FAWE build before enabling <code>paste-entities</code>.</li>
+<li>Two different instances are tested near one another to confirm cross-instance overlap protection.</li>
+<li>Instance data is backed up before production-scale tests, and start permission remains restricted to trusted administrators.</li>
+</ul>
+<p>For exact global defaults and every supported path, continue with the <a href="./configuration.html">configuration reference</a>. For runtime symptoms, use the <a href="./faq.html">FAQ</a>.</p>
+</section>
+
+</article></div></section>
+</main><footer class="fb-site-footer">
+<div class="fb-container fb-container--wide fb-stack">
+<div class="fb-grid fb-grid--2">
+<div class="fb-flow"><a class="fb-brand corex-brand" href="./index.html"><img alt="" height="36" src="./assets/corestructuresx-logo.svg" width="36"/><span>CoreStructuresX</span></a><p>Manual-start modular structures for Paper servers.</p></div>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./pack-authoring.html">Pack Guide</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
+</div>
+<div class="fb-cluster corex-footer-meta"><span>Copyright 2026 CoreStructuresX.</span><span>Version 2026.1.1 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span><a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Powered by FrameBaseCSS</a></div>
+</div>
+</footer><script src="./assets/vendor/highlightjs/highlight.min.js"></script><script src="./assets/vendor/highlightjs/languages/properties.min.js"></script><script src="./assets/site.js"></script></body>
+</html>

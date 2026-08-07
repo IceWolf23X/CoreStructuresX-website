@@ -23,7 +23,7 @@
 </header>
 <main class="fb-main" id="main">
 <section class="fb-hero-section"><div class="fb-container fb-container--wide fb-hero corex-hero"><div class="fb-hero-copy"><p class="fb-eyebrow">Validated packs, controlled expansion</p><h1 class="fb-display">Build modular structures without world-generation hooks.</h1><p class="fb-lead">CoreStructuresX starts structures only when an administrator asks it to. It pastes marked WorldEdit or FAWE schematics in controlled jobs, saves connectors and triggers to JSON, and expands each instance in automatic or player-proximity mode.</p><div class="fb-cluster"><a class="fb-button" href="./installation.html">Install and prepare a pack</a><a class="fb-button fb-button--secondary" href="./features.html">Explore features</a></div><ul class="fb-cluster corex-facts"><li>Java 21+</li><li>Paper 1.21.11+</li><li>WorldEdit or FAWE</li><li>Manual start only</li></ul></div></div></section>
-<section class="fb-section"><div class="fb-container fb-container--wide"><div class="fb-section-header"><p class="fb-eyebrow">Designed for deliberate generation</p><h2>Server owners stay in control of when, where, and how structures grow.</h2></div><div class="fb-card-grid"><article class="fb-card fb-flow"><h3>Manual starts</h3><p>Use <code>/csx start</code> with a pack id and optional group, world position, facing, mode override, or debug output.</p></article><article class="fb-card fb-flow"><h3>Persistent instances</h3><p>Generated modules, connectors, triggers, commands, bounds, and state are stored in JSON rather than inferred from marker signs after restart.</p></article><article class="fb-card fb-flow"><h3>Safety checks</h3><p>Strict pack validation, transformed bounding boxes, overlap rejection, optional block whitelists, lookahead, fallbacks, and closing groups prevent uncontrolled placement.</p></article><article class="fb-card fb-flow"><h3>Stability controls</h3><p>Chunked pastes, per-instance job limits, TPS/MSPT gates, sample thresholds, and automatic delays keep expansion bounded.</p></article></div></div></section>
+<section class="fb-section"><div class="fb-container fb-container--wide"><div class="fb-section-header"><p class="fb-eyebrow">Designed for deliberate generation</p><h2>Server owners stay in control of when, where, and how structures grow.</h2></div><div class="fb-card-grid"><article class="fb-card fb-flow"><h3>Manual starts</h3><p>Use <code>/csx start</code> with a pack id and optional group, world position, facing, mode override, or debug output.</p></article><article class="fb-card fb-flow"><h3>Recoverable instances</h3><p>Atomic, versioned JSON stores modules, connectors, triggers, commands, paste phases, checksums, and cursors so trusted partial jobs can resume after restart.</p></article><article class="fb-card fb-flow"><h3>Global placement safety</h3><p>World-wide module and pending-job bounds prevent different instances from overlapping. Projected limits, block checks, bounded lookahead, fallbacks, and endpoint-only closing groups constrain every candidate.</p></article><article class="fb-card fb-flow"><h3>Shared stability controls</h3><p>Global block, NBT, entity, chunk-load, and time budgets combine with chunk tickets and a hysteretic TPS/MSPT governor across automatic and proximity jobs.</p></article></div></div></section>
 <section class="fb-section" aria-labelledby="usage-heading">
 <div class="fb-container fb-container--wide">
 <div class="fb-section-header">
@@ -77,7 +77,7 @@
 </div>
 </div>
 </section>
-<section class="fb-section"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Start with validation</p><h2>Prepare a pack, run <code>/csx validate</code>, then start a test instance.</h2><div class="fb-cluster corex-center"><a class="fb-button" href="./installation.html">Open setup</a><a class="fb-button fb-button--secondary" href="./configuration.html">Read pack configuration</a></div></div></section>
+<section class="fb-section"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Start with validation</p><h2>Prepare a pack, run <code>/csx validate</code>, then start a test instance.</h2><div class="fb-cluster corex-center"><a class="fb-button" href="./pack-authoring.html">Create a pack</a><a class="fb-button fb-button--secondary" href="./installation.html">Open setup</a><a class="fb-button fb-button--secondary" href="./configuration.html">Configuration reference</a></div></div></section>
 </main>
 <footer class="fb-site-footer">
 <div class="fb-container fb-container--wide fb-stack">
@@ -88,11 +88,11 @@
 </a>
 <p>Manual-start modular structures for Paper servers.</p>
 </div>
-<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./pack-authoring.html">Pack Guide</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
 </div>
 <div class="fb-cluster corex-footer-meta">
 <span>Copyright 2026 CoreStructuresX.</span>
-<span>Version 2026.1.0 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
+<span>Version 2026.1.1 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
 <a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Powered by FrameBaseCSS</a>
 </div>
 </div>

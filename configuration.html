@@ -14,7 +14,7 @@
 </div>
 </header>
 <main class="fb-main" id="main"><header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Configuration reference</p><h1>Configure global safety once, then define each structure as a pack.</h1><p>The current runtime reads <code>config.yml</code> plus pack-owned <code>pack.yml</code>, <code>structure.yml</code>, <code>groups.yml</code>, optional <code>commands.yml</code>, and schematic files.</p></div></header>
-<section class="fb-section"><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell"><aside class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#global">Global defaults</a><a href="#markers">Marker signs</a><a href="#packs">Pack files</a><a href="#commands">Commands</a><a href="#permissions">Permissions</a><a href="#descriptor">Plugin descriptor</a><a href="#runtime">Runtime data</a></aside><article class="fb-doc-main fb-doc-content">
+<section class="fb-section"><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell"><aside class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#global">Global defaults</a><a href="#markers">Marker signs</a><a href="#packs">Pack files</a><a href="#commands">Commands</a><a href="#permissions">Permissions</a><a href="#runtime">Runtime data</a></aside><article class="fb-doc-main fb-doc-content">
 <section id="global"><p class="fb-eyebrow">Global runtime</p><h2>Current bundled <code>config.yml</code></h2><p>Keep storage type <code>JSON</code>, connector and trigger saving enabled, and paste mode <code>CHUNKED</code>. Test any block budget or stability change on the target server.</p><div><div class="fb-code-block"><pre><code class="language-yaml">config-version: 1
 
 settings:
@@ -46,6 +46,17 @@ performance:
   paste:
     mode: CHUNKED
     max-blocks-per-tick: 1500
+    max-milliseconds-per-tick: 5
+    per-job-slice: 256
+    max-active-jobs: 16
+    max-chunk-loads-per-tick: 2
+  schematics:
+    max-axis: 512
+    max-volume: 1000000
+    max-chunks: 1024
+  lookahead:
+    max-simulation-nodes: 10000
+    max-milliseconds: 5
   stability:
     pause-when-tps-below: 18.5
     resume-when-tps-above: 19.5
@@ -53,7 +64,7 @@ performance:
     resume-when-mspt-below: 35
     stable-samples-required: 5
     sample-interval-ticks: 20</code></pre></div></div></section>
-<section id="markers"><p class="fb-eyebrow">Schematic authoring</p><h2>Marker sign contract</h2><div class="fb-card-grid"><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>ORIGIN</h3><p>Line 1 <code>[CSX]</code>, line 2 <code>ORIGIN</code>. Zero markers uses the schematic clipboard origin fallback; more than one is invalid.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>CONNECTOR</h3><p>Line 2 <code>CONNECTOR</code>, line 3 a valid group id, and optional line 4 positive proximity radius. Each saved connector can generate at most one child module.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>COMMAND</h3><p>Line 2 <code>COMMAND</code>, line 3 a valid command-group id, and optional line 4 positive proximity radius. One weighted command entry runs from console.</p></article></div><p>Signs do not contain directions or dimensions. Rotation and transformed bounds come from the schematic and placement context.</p></section>
+<section id="markers"><p class="fb-eyebrow">Schematic authoring</p><h2>Marker sign contract</h2><div class="fb-card-grid"><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>ORIGIN</h3><p>Line 1 <code>[CSX]</code>, line 2 <code>ORIGIN</code>. Zero markers uses the schematic clipboard origin fallback; more than one is invalid.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>CONNECTOR</h3><p>Line 2 <code>CONNECTOR</code>, line 3 a valid group id, and optional line 4 positive proximity radius. A nonblank zero, negative, or malformed radius is invalid; in proximity mode, every connector needs an explicit or default positive radius.</p></article><article class="fb-card fb-card--interactive corex-link-card fb-flow"><h3>COMMAND</h3><p>Line 2 <code>COMMAND</code>, line 3 a valid command-group id, and optional line 4 positive proximity radius. Commands use a persisted at-most-once reservation before console dispatch, preventing deliberate replay after restart.</p></article></div><p>Signs do not contain directions or dimensions. Rotation and transformed bounds come from the schematic and placement context.</p></section>
 <section id="packs"><p class="fb-eyebrow">Pack definitions</p><h2>Required files and responsibilities</h2><div aria-label="Scrollable table" class="fb-table-wrap" tabindex="0"><table class="fb-table--striped fb-table--comfortable"><thead><tr><th>File</th><th>Responsibility</th></tr></thead><tbody><tr><td><code>pack.yml</code></td><td>Pack version, id, display metadata, referenced YAML names, and schematics folder.</td></tr><tr><td><code>structure.yml</code></td><td>Start group, generation mode, automatic/proximity settings, lookahead, limits, closing, space checks, paste performance, native facing, and placement offset.</td></tr><tr><td><code>groups.yml</code></td><td>Weighted schematic entries, per-entry offsets and marker replacements, fallback groups, and closing groups.</td></tr><tr><td><code>commands.yml</code></td><td>Weighted console-command entries used by COMMAND markers. Required only when a schematic references a command group.</td></tr></tbody></table></div><div><div class="fb-code-block"><pre><code class="language-yaml">pack-version: 1
 id: abandoned_mine
 name: "Abandoned Mine"
@@ -62,7 +73,7 @@ author: "IceWolf23X"
 structure: structure.yml
 groups: groups.yml
 commands: commands.yml
-schematics-folder: schematics</code></pre></div></div><p>All ids must be filesystem-safe; weights must be positive; referenced groups and schematic files must exist. Completion requires no open connectors and no active jobs, so packs that can leave connectors open need closing groups with endpoint schematics.</p></section>
+schematics-folder: schematics</code></pre></div></div><p>All ids must be filesystem-safe; weights must be positive; referenced groups and schematic files must exist. Completion requires no open connectors and no active jobs, so packs that can leave connectors open need closing groups with endpoint schematics. Follow the <a href="./pack-authoring.html">complete pack authoring guide</a> for a working folder, schematic workflow, marker layouts, full YAML examples, and validation sequence.</p></section>
 <section id="commands"><p class="fb-eyebrow">Administration</p><h2>Commands</h2><div><div class="fb-code-block"><pre><code>/csx reload
 /csx validate
 /csx validate pack &lt;pack-id&gt;
@@ -79,41 +90,8 @@ corestructuresx.admin.validate
 corestructuresx.admin.packs
 corestructuresx.admin.start
 corestructuresx.admin.instances</code></pre></div></div><p>All permissions default to operators. Keep start permission limited because starting an instance pastes world content.</p></section>
-<section id="descriptor"><p class="fb-eyebrow">Paper descriptor</p><h2>Current bundled <code>plugin.yml</code></h2><p>This is the authoritative runtime declaration for the entry point, soft dependencies, command, and permission tree.</p><div><div class="fb-code-block"><pre><code class="language-yaml">name: CoreStructuresX
-main: com.corestudio.corestructuresx.CoreStructuresXPlugin
-version: ${project.version}
-api-version: '1.21'
-description: Manual-start modular structure generation for Paper servers.
-author: IceWolf23X
-prefix: CoreStructuresX
-softdepend:
-  - WorldEdit
-  - FastAsyncWorldEdit
-commands:
-  csx:
-    description: CoreStructuresX administration command.
-    usage: /csx
-permissions:
-  corestructuresx.admin:
-    description: Grants access to every CoreStructuresX administration command.
-    default: op
-    children:
-      corestructuresx.admin.reload: true
-      corestructuresx.admin.validate: true
-      corestructuresx.admin.packs: true
-      corestructuresx.admin.start: true
-      corestructuresx.admin.instances: true
-  corestructuresx.admin.reload:
-    default: op
-  corestructuresx.admin.validate:
-    default: op
-  corestructuresx.admin.packs:
-    default: op
-  corestructuresx.admin.start:
-    default: op
-  corestructuresx.admin.instances:
-    default: op</code></pre></div></div></section>
-<section id="runtime"><p class="fb-eyebrow">Persistence and reloads</p><h2>Protect active instance data.</h2><p><code>/csx reload</code> is intended for YAML and pack changes only when no paste job or automatic expansion is active. Pause affected instances first. Replacing jars, WorldEdit/FAWE, or the Paper version requires a restart.</p><p>Instance JSON under <code>data/instances/</code> is the source of truth after markers are replaced. Back it up before repair, and never delete corrupt JSON automatically.</p></section>
+
+<section id="runtime"><p class="fb-eyebrow">Persistence and reloads</p><h2>Protect active instance data.</h2><p><code>/csx reload</code> is rejected while any paste job is queued, running, paused, or finalizing. Pausing preserves its exact cursor but does not make reload safe; wait for every paste job to finish. Replacing jars, WorldEdit/FAWE, or the Paper version requires a restart.</p><p>Instance JSON under <code>data/instances/</code> uses data version 4, monotonic revisions, fsynced temporary writes, atomic replacement where supported, and a rolling <code>.json.bak</code>. A corrupt primary is quarantined as <code>.json.corrupt</code> and restored automatically when its backup is valid.</p><p><code>generation.recovery.backtrack-on-blocked</code> must remain <code>false</code>. Destructive module deletion is rejected because prior terrain, NBT, entities, commands, and later external changes cannot be restored losslessly.</p></section>
 </article></div></section>
 </main><footer class="fb-site-footer">
 <div class="fb-container fb-container--wide fb-stack">
@@ -124,11 +102,11 @@ permissions:
 </a>
 <p>Manual-start modular structures for Paper servers.</p>
 </div>
-<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./pack-authoring.html">Pack Guide</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
 </div>
 <div class="fb-cluster corex-footer-meta">
 <span>Copyright 2026 CoreStructuresX.</span>
-<span>Version 2026.1.0 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
+<span>Version 2026.1.1 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
 <a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Powered by FrameBaseCSS</a>
 </div>
 </div>

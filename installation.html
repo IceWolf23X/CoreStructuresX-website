@@ -13,7 +13,7 @@
 </nav>
 </div>
 </header>
-<main class="fb-main" id="main"><header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Installation and first pack</p><h1>Install the runtime, validate a pack, then start a controlled test.</h1><p>CoreStructuresX requires Java 21+, Paper 1.21.11+, and a loaded WorldEdit or FastAsyncWorldEdit plugin.</p></div></header><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell"><aside aria-label="Page contents" class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#setup">Setup workflow</a><a href="#layout">Runtime layout</a></aside><article class="fb-doc-main fb-doc-content"><section class="fb-doc-section" id="setup"><p class="fb-eyebrow">Installation</p><h2>Install and validate a pack</h2><div class="fb-card-grid"><article class="fb-card fb-flow"><p>1. Install</p><h2>Place the plugins</h2><ol><li>Stop Paper.</li><li>Install WorldEdit or FAWE.</li><li>Put <code>CoreStructuresX-2026.1.0.jar</code> in <code>plugins/</code>.</li><li>Start Paper and confirm <code>config.yml</code> and the bundled <code>packs/csx_test_pack/</code> are created.</li></ol></article><article class="fb-card fb-flow"><p>2. Prepare</p><h2>Use or add a pack</h2><p>Use the bundled <code>csx_test_pack</code> for an initial test, or create <code>plugins/CoreStructuresX/packs/&lt;pack-id&gt;/</code> with <code>pack.yml</code>, <code>structure.yml</code>, <code>groups.yml</code>, optional <code>commands.yml</code>, and a <code>schematics/</code> folder. Existing copies of <code>csx_test_pack</code> are never overwritten.</p></article><article class="fb-card fb-flow"><p>3. Validate</p><h2>Fix every error</h2><div><div class="fb-code-block"><pre><code>/csx reload
+<main class="fb-main" id="main"><header class="fb-doc-header corex-page-hero"><div class="fb-container fb-container--wide"><p class="fb-eyebrow">Installation and first pack</p><h1>Install the runtime, validate a pack, then start a controlled test.</h1><p>CoreStructuresX requires Java 21+, Paper 1.21.11+, and a loaded WorldEdit or FastAsyncWorldEdit plugin.</p></div></header><div class="fb-container fb-container--wide fb-doc-shell corex-doc-shell"><aside aria-label="Page contents" class="fb-doc-sidebar fb-doc-nav-panel corex-toc"><strong>On this page</strong><a href="#setup">Setup workflow</a><a href="#layout">Runtime layout</a><a href="#authoring">Create a pack</a></aside><article class="fb-doc-main fb-doc-content"><section class="fb-doc-section" id="setup"><p class="fb-eyebrow">Installation</p><h2>Install and validate a pack</h2><div class="fb-card-grid"><article class="fb-card fb-flow"><p>1. Install</p><h2>Place the plugins</h2><ol><li>Stop Paper.</li><li>Install WorldEdit or FAWE.</li><li>Put <code>CoreStructuresX-2026.1.1.jar</code> in <code>plugins/</code>.</li><li>Start Paper and confirm <code>config.yml</code> and the bundled <code>packs/csx_test_pack/</code> are created.</li></ol></article><article class="fb-card fb-flow"><p>2. Prepare</p><h2>Use or add a pack</h2><p>Use the bundled <code>csx_test_pack</code> for an initial test, or create <code>plugins/CoreStructuresX/packs/&lt;pack-id&gt;/</code> with <code>pack.yml</code>, <code>structure.yml</code>, <code>groups.yml</code>, optional <code>commands.yml</code>, and a <code>schematics/</code> folder. Existing copies of <code>csx_test_pack</code> are never overwritten.</p></article><article class="fb-card fb-flow"><p>3. Validate</p><h2>Fix every error</h2><div><div class="fb-code-block"><pre><code>/csx reload
 /csx validate
 /csx packs list</code></pre></div></div><p>Do not start a pack while validation reports errors.</p></article><article class="fb-card fb-flow"><p>4. Test</p><h2>Start manually</h2><div><div class="fb-code-block"><pre><code>/csx start &lt;pack-id&gt;
 /csx instances list
@@ -28,7 +28,7 @@
 |       |-- groups.yml
 |       |-- commands.yml
 |       `-- schematics/*.schem
-`-- data/instances/*.json</code></pre></div></div></section></article></div>
+`-- data/instances/*.json</code></pre></div></div></section><section class="fb-doc-section" id="authoring"><p class="fb-eyebrow">Next step</p><h2>Build the pack graph, schematics, markers, and YAML files.</h2><p>The setup page confirms the runtime is installed. The dedicated <a href="./pack-authoring.html">pack authoring guide</a> continues with a complete working layout, marker sign formats, automatic and proximity examples, weighted groups, fallback and closing behavior, command markers, safety checks, validation, and production testing.</p><div class="fb-cluster"><a class="fb-button" href="./pack-authoring.html">Open the pack authoring guide</a><a class="fb-button fb-button--secondary" href="./configuration.html">Open the configuration reference</a></div></section></article></div>
 </main><footer class="fb-site-footer">
 <div class="fb-container fb-container--wide fb-stack">
 <div class="fb-grid fb-grid--2">
@@ -38,11 +38,11 @@
 </a>
 <p>Manual-start modular structures for Paper servers.</p>
 </div>
-<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
+<nav aria-label="Footer navigation" class="fb-cluster"><a href="./features.html">Features</a><a href="./installation.html">Setup</a><a href="./pack-authoring.html">Pack Guide</a><a href="./configuration.html">Configuration</a><a href="./docs.html">Documentation</a><a href="./faq.html">FAQ</a><a href="https://github.com/IceWolf23X/CoreStructuresX-issues" rel="noopener noreferrer" target="_blank">GitHub</a></nav>
 </div>
 <div class="fb-cluster corex-footer-meta">
 <span>Copyright 2026 CoreStructuresX.</span>
-<span>Version 2026.1.0 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
+<span>Version 2026.1.1 · Java 21+ · Paper 1.21.11+ · WorldEdit/FAWE</span>
 <a href="https://github.com/IceWolf23X/FrameBaseCSS" rel="noopener noreferrer" target="_blank">Powered by FrameBaseCSS</a>
 </div>
 </div>

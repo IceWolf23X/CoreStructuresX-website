@@ -59,15 +59,15 @@ window.COREX_SITE = {
       accentSoft: '#fff0f3',
       accentLine: '#f5becb',
       onAccent: '#ffffff',
-      page: '#fcfbfb',
+      page: '#fcfcfb',
       surface: '#ffffff',
-      surfaceAlt: '#f7f3f4',
-      surfaceHover: '#f0e9eb',
-      ink: '#292125',
-      muted: '#6c6066',
-      quiet: '#7d6e75',
-      line: '#eadfe2',
-      lineStrong: '#d8c8cd'
+      surfaceAlt: '#f5f5f3',
+      surfaceHover: '#eeedeb',
+      ink: '#24232a',
+      muted: '#65636f',
+      quiet: '#726d7a',
+      line: '#e7e5e9',
+      lineStrong: '#d4d1da'
     },
     dark: {
       accent: '#ff6687',
@@ -75,15 +75,15 @@ window.COREX_SITE = {
       accentSoft: '#38222a',
       accentLine: '#693444',
       onAccent: '#271318',
-      page: '#191517',
-      surface: '#211b1e',
-      surfaceAlt: '#292125',
-      surfaceHover: '#33282d',
-      ink: '#f3ecef',
-      muted: '#baaab1',
-      quiet: '#97858d',
-      line: '#3a2e33',
-      lineStrong: '#554149'
+      page: '#17171a',
+      surface: '#1d1d21',
+      surfaceAlt: '#232327',
+      surfaceHover: '#2b2a30',
+      ink: '#eeedf1',
+      muted: '#aaa7b3',
+      quiet: '#8c8797',
+      line: '#313037',
+      lineStrong: '#45424e'
     }
   }
 };

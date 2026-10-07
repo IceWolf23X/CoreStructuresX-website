@@ -1,0 +1,22 @@
+<h2 id="paper-server">Paper server</h2>
+<ol>
+<li>Stop Paper.</li>
+<li>Install WorldEdit or FastAsyncWorldEdit.</li>
+<li>Place <code>CoreStructuresX-2026.1.1.jar</code> in <code>plugins/</code>.</li>
+<li>Start Paper once.</li>
+<li>Confirm <code>plugins/CoreStructuresX/config.yml</code> and <code>packs/csx_test_pack/</code> were created.</li>
+</ol>
+<h2 id="first-validation">First validation</h2>
+<pre tabindex="0"><code>/csx validate
+/csx packs list</code></pre>
+<p>Fix every error before starting an instance. Warnings about an omitted ORIGIN mean the saved schematic clipboard origin will be used; confirm that position is intentional.</p>
+<h2 id="controlled-start">Controlled start</h2>
+<p>Back up the test world and instance folder, choose an isolated area, then start the bundled pack:</p>
+<pre tabindex="0"><code>/csx start csx_test_pack
+/csx instances list
+/csx instance info &lt;instance-id&gt;</code></pre>
+<p>A console sender must provide the world, integer coordinates and cardinal facing:</p>
+<pre tabindex="0"><code>/csx start csx_test_pack world 100 64 100 SOUTH</code></pre>
+<h2 id="restart-test">Restart test</h2>
+<p>After a controlled placement, stop Paper normally and start it again. Confirm the instance loads, connectors and triggers remain present, and any trusted interrupted job resumes only when its recorded pack, schematic, recipe, transform and operation counts still match.</p>
+<hr>

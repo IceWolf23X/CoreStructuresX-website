@@ -1,0 +1,26 @@
+<h2 id="header">Header</h2>
+<p>Every marker begins with <code>[CSX]</code> on line 1. Header matching is case-insensitive by default. Supported line-2 types are exactly <code>ORIGIN</code>, <code>CONNECTOR</code> and <code>COMMAND</code>.</p>
+<h2 id="origin">ORIGIN</h2>
+<pre tabindex="0"><code>[CSX]
+ORIGIN</code></pre>
+<p>Use zero or one ORIGIN. Zero uses the saved schematic clipboard origin when <code>validation.require-origin</code> is false. More than one is invalid. The marker block is replaced during paste.</p>
+<h2 id="connector">CONNECTOR</h2>
+<pre tabindex="0"><code>[CSX]
+CONNECTOR
+&lt;group-id&gt;
+&lt;optional-radius&gt;</code></pre>
+<p>Line 3 names a group from <code>groups.yml</code>. Optional line 4 is a positive player-proximity radius. A blank line uses the pack default; a nonblank zero, negative or malformed value is invalid. The sign facing determines the expansion direction.</p>
+<h2 id="command">COMMAND</h2>
+<pre tabindex="0"><code>[CSX]
+COMMAND
+&lt;command-group-id&gt;
+&lt;optional-radius&gt;</code></pre>
+<p>Line 3 names a group from <code>commands.yml</code>. In automatic mode the command is considered after durable module finalization. In proximity mode it waits for the saved trigger. The transformed marker position supplies command coordinates.</p>
+<h2 id="authoring-rules">Authoring rules</h2>
+<ul>
+<li>Do not use aliases such as <code>CONN</code>, <code>ENTRY</code>, <code>EXIT</code> or <code>NODE</code>.</li>
+<li>Do not encode dimensions, directions, coordinates or rotation in sign text.</li>
+<li>Marker replacement material is global unless the selected group entry overrides it.</li>
+<li>In proximity mode, every connector needs an explicit radius or a positive pack default.</li>
+</ul>
+<hr>

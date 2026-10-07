@@ -1,0 +1,17 @@
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>Java 21+.</li>
+<li>Paper 1.21.11+.</li>
+<li>CoreStructuresX 2026.1.1.</li>
+<li>WorldEdit or FastAsyncWorldEdit installed and loaded.</li>
+<li>A permission manager when operator-only defaults are not appropriate.</li>
+</ul>
+<h2 id="backup-first">Back up before world mutation</h2>
+<p>Before testing a new pack or plugin update, back up the affected worlds and the complete <code>plugins/CoreStructuresX/</code> directory. Keep configuration, pack YAML, schematics and <code>data/instances/</code> together in the recovery set.</p>
+<h2 id="trusted-authors">Trust boundary</h2>
+<p>Only trusted administrators should author packs or receive start permission. Schematics modify world blocks and optional entities; COMMAND markers dispatch server-console commands after durable placement.</p>
+<h2 id="validation-boundary">Validation boundary</h2>
+<p>Validation catches unsupported keys and modes, unsafe paths, missing references, marker defects, unresolved connector graphs and configured size limits. It cannot prove visual correctness, production performance, plugin interoperability or every runtime world condition.</p>
+<h2 id="existing-yaml">Existing YAML is not auto-merged</h2>
+<p>When a plugin update adds bundled keys, the existing server file is left unchanged. Compare it with the documented current default and add new settings deliberately.</p>
+<hr>

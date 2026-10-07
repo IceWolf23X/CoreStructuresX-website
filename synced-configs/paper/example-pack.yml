@@ -1,0 +1,9 @@
+pack-version: 1
+id: csx_test_pack
+name: CoreStructuresX Test Pack
+version: 1.0.0
+author: IceWolf23X
+structure: structure.yml
+groups: groups.yml
+commands: commands.yml
+schematics-folder: schematics

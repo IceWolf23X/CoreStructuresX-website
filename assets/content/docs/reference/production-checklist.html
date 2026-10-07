@@ -1,0 +1,37 @@
+<h2 id="runtime">Runtime</h2>
+<ul>
+<li>Paper starts cleanly with Java 21+ and a loaded WorldEdit or FAWE provider.</li>
+<li>The exact Paper/provider combination has been tested with this plugin version.</li>
+<li>Worlds, plugin data and pack sources have a tested backup and restore path.</li>
+</ul>
+<h2 id="pack">Pack</h2>
+<ul>
+<li><code>/csx validate</code> reports zero errors.</li>
+<li>Every referenced schematic exists inside the configured folder.</li>
+<li>Every reachable connector group has a finite endpoint route.</li>
+<li>Fallback and endpoint-only closing groups have been exercised.</li>
+<li>Every rotation preserves intended block states, signs, inventories, spawners, skulls, banners and lecterns.</li>
+<li>Optional entities are tested on the target Paper/provider build before <code>paste-entities</code> is enabled.</li>
+</ul>
+<h2 id="limits">Limits and performance</h2>
+<ul>
+<li>Module, radius and open-connector caps fit the intended largest structure.</li>
+<li>Global axis, volume and chunk-footprint limits accept production schematics without allowing accidental huge inputs.</li>
+<li>Block/time/job/chunk-load budgets have been measured with loaded and unloaded chunks.</li>
+<li>TPS/MSPT pause and resume behavior is observed under load.</li>
+<li>High-branching lookahead stops inside its configured node/time bounds.</li>
+</ul>
+<h2 id="recovery">Persistence and recovery</h2>
+<ul>
+<li>Automatic and proximity instances survive a normal restart.</li>
+<li>Interrupted trusted phased jobs resume from persisted cursors.</li>
+<li>Connectors, triggers and command UUIDs remain present after restart.</li>
+<li>Rolling backup recovery and the manual stop/back-up/repair procedure are understood.</li>
+<li>Clear-footprint is restricted to operators who can inspect the exact failed region.</li>
+</ul>
+<h2 id="access">Access</h2>
+<ul>
+<li>Start and instance-management permissions are limited to trusted administrators.</li>
+<li>Pack authors understand that COMMAND markers execute as console.</li>
+</ul>
+<hr>

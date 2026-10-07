@@ -1,0 +1,28 @@
+<h2 id="instances">Instances</h2>
+<p>An instance owns one structure origin, selected mode, generated modules, connectors, triggers, command records and paste journals. Its persisted id is also its canonical JSON filename.</p>
+<h2 id="instance-states">Instance states</h2>
+<pre tabindex="0"><code>CREATED
+EXPANDING
+AUTO_EXPANDING
+PAUSED
+STOPPED
+CLOSING
+COMPLETED
+BLOCKED
+FAILED</code></pre>
+<p><code>PAUSED</code> preserves active progress. <code>STOPPED</code> is terminal and accepted only without an active or recoverable job. <code>COMPLETED</code> requires every connector to be used or closed and no active job.</p>
+<h2 id="connectors">Connector states</h2>
+<pre tabindex="0"><code>OPEN
+PROCESSING
+USED
+CLOSED
+BLOCKED</code></pre>
+<p>Every PROCESSING connector must correspond to exactly one recoverable child job, and every recoverable child job must reference its PROCESSING parent connector.</p>
+<h2 id="triggers">Trigger states</h2>
+<pre tabindex="0"><code>ACTIVE
+DISABLED
+EXPIRED</code></pre>
+<p>Triggers are persisted independently from marker signs, so proximity behavior survives marker replacement and restart.</p>
+<h2 id="finalizing">Durable finalization</h2>
+<p><code>FINALIZING</code> is a job phase, not a public instance state. The detached final state is committed before new modules, connectors, triggers, completion or immediate command dispatch become visible to the live runtime.</p>
+<hr>

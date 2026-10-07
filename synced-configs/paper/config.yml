@@ -1,0 +1,58 @@
+config-version: 1
+
+settings:
+  debug: false
+
+packs:
+  folder: packs
+
+markers:
+  header: "[CSX]"
+  case-insensitive-header: true
+  replacements:
+    ORIGIN: AIR
+    CONNECTOR: AIR
+    COMMAND: AIR
+
+storage:
+  type: JSON
+  folder: data/instances
+  save-connectors: true
+  save-triggers: true
+  checkpoint-interval-ticks: 20
+  checkpoint-operations: 2048
+  force-at-phase-boundaries: true
+
+validation:
+  strict: true
+  require-origin: false
+  require-all-connectors-resolvable: true
+
+performance:
+  paste:
+    mode: CHUNKED
+    max-blocks-per-tick: 1500
+    max-milliseconds-per-tick: 5
+    per-job-slice: 256
+    max-active-jobs: 16
+    max-chunk-loads-per-tick: 2
+  schematics:
+    max-axis: 512
+    max-volume: 1000000
+    max-chunks: 1024
+  schematic-cache:
+    warmup-templates: false
+    max-compiled-entries: 4
+    max-compiled-points: 500000
+    max-template-entries: 8
+    max-template-operations: 1000000
+  lookahead:
+    max-simulation-nodes: 10000
+    max-milliseconds: 5
+  stability:
+    pause-when-tps-below: 18.5
+    resume-when-tps-above: 19.5
+    pause-when-mspt-above: 45
+    resume-when-mspt-below: 35
+    stable-samples-required: 5
+    sample-interval-ticks: 20

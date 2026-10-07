@@ -1,0 +1,22 @@
+<h2 id="strict-yaml">Strict YAML</h2>
+<p>With <code>validation.strict: true</code>, unknown keys are rejected at every fixed global, structure, group-entry, offset and command-entry level. Material maps and dynamic group ids remain intentionally dynamic.</p>
+<h2 id="pack-roots">Pack roots and ids</h2>
+<p>The loader enumerates direct children of the packs folder without following links. Symbolic-link, junction or reparse-point pack roots are rejected. All folders are grouped by declared id before publication; every duplicate definition is disabled with diagnostics.</p>
+<h2 id="confined-paths">Confined paths</h2>
+<p>Every pack YAML and schematic reference must be relative, lexically remain inside its configured root, and still resolve inside that root on the real filesystem. External links and sibling-prefix tricks do not pass validation.</p>
+<h2 id="marker-validation">Marker validation</h2>
+<ul>
+<li>At most one ORIGIN marker.</li>
+<li>Every CONNECTOR group exists.</li>
+<li>Every COMMAND group exists.</li>
+<li>Every nonblank proximity radius is a positive integer.</li>
+<li>Every connector in proximity mode has an explicit or positive default radius.</li>
+</ul>
+<h2 id="graph-validation">Graph validation</h2>
+<p>Closing entries must be endpoints. With <code>require-all-connectors-resolvable</code>, the loader analyzes every group reachable from the start group and rejects a closed cycle or branch without a finite endpoint path.</p>
+<h2 id="commands">Validation commands</h2>
+<pre tabindex="0"><code>/csx validate
+/csx validate pack &lt;pack-id&gt;
+/csx packs list</code></pre>
+<p>The aggregate report shows its first 20 issues; use per-pack validation to inspect the complete selected report.</p>
+<hr>

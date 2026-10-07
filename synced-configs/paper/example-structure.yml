@@ -1,0 +1,72 @@
+structure-version: 1
+id: csx_test_pack
+enabled: true
+
+start:
+  mode: MANUAL
+  group: init
+
+placement:
+  native-facing: NORTH
+  offset:
+    forward: 1
+    left: 0
+    right: 0
+    up: 0
+
+generation:
+  mode: AUTOMATIC
+  automatic:
+    connector-order:
+      primary: NEAREST_TO_ORIGIN
+      secondary: FIFO
+    job-delay: 1
+  lookahead:
+    enabled: true
+    depth: 2
+    connector-policy: ALL_CONNECTORS
+  recovery:
+    backtrack-on-blocked: false
+  player-proximity:
+    check-interval: 20t
+    default-radius: 8
+  limits:
+    max-modules: 1000
+    max-radius: 5000
+    max-open-connectors: 300
+  completion:
+    require-all-connectors-resolved: true
+    enter-closing-when-limits-reached: true
+
+space-check:
+  overlap:
+    mode: SCHEMATIC_BOUNDING_BOX
+    padding: 0
+    double-pass-block-check: true
+  block-check:
+    enabled: true
+    mode: WHITELIST
+    replaceable:
+      - AIR
+      - CAVE_AIR
+      - VOID_AIR
+      - BLACK_GLAZED_TERRACOTTA
+  post-paste-replacements:
+    BLACK_GLAZED_TERRACOTTA: AIR
+    GREEN_CONCRETE: LIGHT_GRAY_CONCRETE
+    RED_CONCRETE: LIGHT_GRAY_CONCRETE
+    LIME_CONCRETE: LIGHT_GRAY_CONCRETE
+    PURPLE_CONCRETE: LIGHT_GRAY_CONCRETE
+    MAGENTA_CONCRETE: LIGHT_GRAY_CONCRETE
+    YELLOW_CONCRETE: LIGHT_GRAY_CONCRETE
+    ORANGE_CONCRETE: LIGHT_GRAY_CONCRETE
+    BLUE_CONCRETE: LIGHT_GRAY_CONCRETE
+    LIGHT_BLUE_CONCRETE: LIGHT_GRAY_CONCRETE
+
+performance:
+  paste:
+    mode: CHUNKED
+    max-blocks-per-tick: 1500
+    paste-air: false
+    paste-entities: false
+    max-active-jobs-per-instance: 1

@@ -1,0 +1,15 @@
+<h2 id="data-version">Data version 5</h2>
+<p>Every current canonical instance uses data version 5. The filename is derived from a safe <code>[a-z0-9_-]+</code> instance id. Filename/id mismatches, unsafe ids and duplicate definitions are excluded before publication.</p>
+<h2 id="saved-state">Saved state</h2>
+<p>The JSON graph includes origin, mode overrides, generated modules, spatial bounds, connectors, proximity triggers, command reservations, lifecycle state, sequences and complete recoverable paste journals.</p>
+<h2 id="revisions">Revisions and ordered checkpoints</h2>
+<p>The server thread assigns monotonic revisions and captures detached state only when a checkpoint is due. One ordered daemon writer serializes, flushes and atomically replaces snapshots. Per-instance submissions are coalesced and stale revisions cannot replace newer state.</p>
+<h2 id="checkpoint-schedule">Checkpoint schedule</h2>
+<p>The global interval, operation threshold and phase-boundary flag determine periodic cursor checkpoints. Transactional lifecycle changes, first-mutation intent, finalization and shutdown still use synchronous commits where durability gates a world/runtime effect.</p>
+<h2 id="finalization">Finalization</h2>
+<p>A paste enters <code>FINALIZING</code> with its job record still recoverable. The complete detached final state is saved before new module, connector, trigger or command state becomes visible. A failed final commit leaves finalization pending for retry.</p>
+<h2 id="restart-validation">Restart validation</h2>
+<p>Startup rebuilds jobs only when pack, schematic, transformed paste recipe, operation counts and invariants match the journal. A mismatch blocks the job and parent connector instead of continuing with changed inputs.</p>
+<h2 id="checkpoint-failure">Checkpoint failure</h2>
+<p>A failed asynchronous checkpoint pauses the affected instance, releases its chunk tickets, records the reason and prevents further mutation until the storage problem is corrected and the instance is resumed.</p>
+<hr>

@@ -1,0 +1,16 @@
+<h2 id="reloadable">Reloadable changes</h2>
+<p>Use <code>/csx reload</code> for global <code>config.yml</code> changes, new pack folders, corrected pack YAML, or schematic additions made before affected instances begin using them.</p>
+<h2 id="reload-guard">Reload guard</h2>
+<p>Reload is rejected while any paste job is queued, running, paused or finalizing. A paused instance retains its exact cursor and still blocks reload. Wait for every paste job to finish.</p>
+<p>A rejected reload leaves the current runtime and scheduler in place. If loading a replacement configuration fails after schedulers stop, the plugin restores the previous config, packs, manager and schematic service, then restarts the previous scheduler.</p>
+<h2 id="restart-required">Restart required</h2>
+<ul>
+<li>Replacing the CoreStructuresX JAR.</li>
+<li>Replacing WorldEdit or FAWE.</li>
+<li>Changing Paper or Minecraft version.</li>
+<li>Recovering from startup dependency or classloading errors.</li>
+<li>Performing a clean boot after broad configuration or pack changes.</li>
+</ul>
+<h2 id="restart-recovery">Restart recovery</h2>
+<p>Normal shutdown persists every instance synchronously after flushing the ordered checkpoint writer. Startup reconstructs trusted jobs only when fingerprints, transforms and operation counts match. Changed recovery inputs block the job and parent connector instead of pasting unverified content.</p>
+<hr>

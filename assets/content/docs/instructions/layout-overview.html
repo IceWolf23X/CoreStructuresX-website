@@ -1,0 +1,24 @@
+<h2 id="plugin-folder">Plugin folder</h2>
+<pre tabindex="0"><code>plugins/CoreStructuresX/
+|-- config.yml
+|-- packs/
+|   |-- csx_test_pack/
+|   `-- &lt;pack-id&gt;/
+|       |-- pack.yml
+|       |-- structure.yml
+|       |-- groups.yml
+|       |-- commands.yml
+|       `-- schematics/
+|           `-- *.schem
+`-- data/
+    `-- instances/
+        `-- &lt;instance-id&gt;.json</code></pre>
+<h2 id="definitions">Pack definitions</h2>
+<p>Files under <code>packs/</code> describe choices available to future generation. Keep every referenced YAML and schematic path inside its pack directory. Do not point a pack at external files through traversal, symbolic links, junctions or reparse points.</p>
+<h2 id="live-state">Live instance state</h2>
+<p>Files under <code>data/instances/</code> are authoritative runtime state. They contain generated module records, connectors, triggers, command reservations, job phases, checksums and cursors. Never store instance JSON inside a pack folder.</p>
+<h2 id="bundled-pack">Bundled test pack</h2>
+<p>The JAR contains <code>bundled-packs/csx_test_pack/</code> and an explicit file manifest. First start installs it atomically only when the administrator copy does not exist; later starts never overwrite that directory.</p>
+<h2 id="editing">Editing rules</h2>
+<p>Do not replace schematics or pack definitions while an instance using them is actively pasting. Stop the server for manual JSON repair. Use reload only within the boundaries in the next article.</p>
+<hr>

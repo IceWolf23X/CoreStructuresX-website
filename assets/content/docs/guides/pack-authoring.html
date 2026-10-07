@@ -1,0 +1,69 @@
+<h2 id="model">How packs work</h2>
+<p>A pack is a graph of reusable schematic modules. The first module comes from <code>start.group</code>; CONNECTOR markers name the group used for each next edge. A candidate is selected by weight only after the runtime confirms its configured safety checks.</p>
+<h2 id="plan">Plan the module graph</h2>
+<p id="plan-the-module-graph">Begin with one entrance, one repeatable path and one endpoint. Draw every connector group and its route to an endpoint. Add fallback candidates where tight terrain can reject a normal module, and add endpoint-only closing groups for connectors that may remain open at a hard limit.</p>
+<h2 id="layout">Folder layout</h2>
+<pre tabindex="0"><code>plugins/CoreStructuresX/packs/abandoned_mine/
+|-- pack.yml
+|-- structure.yml
+|-- groups.yml
+|-- commands.yml
+`-- schematics/
+    |-- entrance_01.schem
+    |-- corridor_01.schem
+    `-- endpoint_01.schem</code></pre>
+<p><code>commands.yml</code> is optional when no schematic has a COMMAND marker. All configured paths must stay inside this pack directory.</p>
+<h2 id="schematics">Create schematics</h2>
+<ol>
+<li>Build one module with an intentional bounding box.</li>
+<li>Place zero or one ORIGIN marker; save the clipboard origin deliberately when omitting it.</li>
+<li>Place each CONNECTOR at the exact attachment point and face it toward the child expansion direction.</li>
+<li>Add COMMAND markers only for trusted post-placement actions.</li>
+<li>Save as Sponge <code>.schem</code> through the provider used by the target server.</li>
+</ol>
+<p>Test block-state rotation and block-entity NBT for chests, signs, skulls, banners, spawners and lecterns. Enable schematic entities only after testing their position, rotation and state on the exact stack.</p>
+<h2 id="markers">Marker signs</h2>
+<p>Use only ORIGIN, CONNECTOR and COMMAND. Marker blocks are replaced during paste, while the connector, trigger and command records are persisted. See the <a href="#/docs/instructions/marker-signs">complete line contract</a>.</p>
+<h2 id="pack-yml">pack.yml</h2>
+<p>Set schema version 1, a unique safe id, display metadata, and the relative filenames for structure, groups, commands and schematics. A folder/id mismatch is allowed with a warning; duplicate declared ids disable every duplicate pack.</p>
+<h2 id="structure-yml">structure.yml</h2>
+<p>Match the pack id. Keep <code>start.mode: MANUAL</code>, choose a start group and native facing, then configure placement offset, generation mode, limits, completion, checks and paste behavior. Keep <code>backtrack-on-blocked: false</code> and <code>require-all-connectors-resolved: true</code>.</p>
+<h2 id="groups-yml">groups.yml</h2>
+<p>Each dynamic group needs at least one positive-weight entry. Optional per-entry offset replaces the pack offset for that candidate. Marker replacement overrides apply only to that entry. Fallback and closing references must name existing groups; closing entries must have zero CONNECTOR markers.</p>
+<h2 id="commands-yml">commands.yml</h2>
+<p>Each command group contains positive-weight entries. An entry may hold one string, a list, or a map of named strings. Commands run as console after the at-most-once reservation is saved. Do not place untrusted input into administrator-authored commands.</p>
+<h2 id="safety">Safety choices</h2>
+<ul>
+<li>Keep one active job per instance until serial execution is proven.</li>
+<li>Use a conservative replaceable-block whitelist.</li>
+<li>Enable double pass only with block checking; it never bypasses pending jobs.</li>
+<li>Start lookahead at depth 1 and increase only with measured need.</li>
+<li>Keep module, radius, connector and global schematic limits well below accidental input sizes.</li>
+<li>Use post-paste replacements for deliberate temporary authoring blocks.</li>
+</ul>
+<h2 id="validate">Validate and test</h2>
+<pre tabindex="0"><code>/csx reload
+/csx validate pack abandoned_mine
+/csx packs list
+/csx start abandoned_mine world 100 64 100 SOUTH
+/csx instance info &lt;instance-id&gt;</code></pre>
+<p>Test every rotation, branch, fallback, closing route, mode, limit transition and restart. A first module that pastes correctly does not prove the complete graph.</p>
+<h2 id="diagnose">Common failures</h2>
+<ul>
+<li>Missing pack: check direct folder placement, <code>pack.yml</code>, unique id and confined paths.</li>
+<li>Invalid schematic: check markers, group ids, provider readability and configured size limits.</li>
+<li>Blocked connector: inspect the recorded reason, fallback/closing graph, overlap, whitelist and lookahead.</li>
+<li>Stalled automatic mode: inspect TPS, MSPT, stable samples, job delay and closing state.</li>
+<li>Inactive proximity: check the same world, the connector state and a positive explicit/default radius.</li>
+</ul>
+<h2 id="checklist">Release checklist</h2>
+<ul>
+<li>Zero validation errors.</li>
+<li>All reachable groups have a finite endpoint route.</li>
+<li>All rotations preserve expected block states and NBT.</li>
+<li>Optional entities are proven on the target stack.</li>
+<li>Largest intended expansion remains inside every hard limit and runtime budget.</li>
+<li>Interrupted trusted jobs resume after a clean restart.</li>
+<li>World and plugin folders are backed up before production use.</li>
+</ul>
+<hr>

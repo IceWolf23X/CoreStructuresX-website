@@ -1,0 +1,18 @@
+<h2 id="one-pack-one-structure">One pack, one structure type</h2>
+<p>A direct child directory of <code>plugins/CoreStructuresX/packs/</code> defines one pack. The pack id identifies its live instances and must be unique across every loaded folder.</p>
+<h2 id="four-yaml-files">Four YAML responsibilities</h2>
+<div class="table-scroll" role="region" tabindex="0" aria-label="Pack file responsibilities"><table>
+<thead><tr><th>File</th><th>Responsibility</th></tr></thead>
+<tbody>
+<tr><td><code>pack.yml</code></td><td>Identity and confined paths to the other files and schematics directory.</td></tr>
+<tr><td><code>structure.yml</code></td><td>Start group, facing, offsets, expansion mode, hard limits, checks and paste settings.</td></tr>
+<tr><td><code>groups.yml</code></td><td>Weighted schematic entries, per-entry overrides, fallbacks and closing groups.</td></tr>
+<tr><td><code>commands.yml</code></td><td>Optional weighted console-command groups used by COMMAND markers.</td></tr>
+</tbody></table></div>
+<h2 id="schematics">Schematics</h2>
+<p>Referenced schematic paths must remain inside the configured schematics folder after lexical and real-filesystem resolution. Absolute paths, traversal and external links are rejected. Each schematic should use one ORIGIN marker or a deliberately saved clipboard origin.</p>
+<h2 id="graph">The module graph</h2>
+<p>The start group chooses the first module. CONNECTOR markers name the group used by each next edge. Fallback groups provide alternative candidates; closing groups provide zero-connector endpoints. With the default resolvability check, every reachable connector group needs a finite path to an endpoint.</p>
+<h2 id="small-first">Start with the smallest complete graph</h2>
+<p>Prove an entrance, a repeatable path and an endpoint before adding splits, stairs, commands, lookahead or parallel jobs. Validate and restart that small graph, then add one source of variation at a time.</p>
+<hr>

@@ -1,0 +1,13 @@
+<h2 id="preflight">Candidate preflight</h2>
+<p>Before queueing a module, CoreStructuresX transforms its bounds, checks the complete chunk footprint, verifies the radius from the structure origin, and evaluates collisions with generated modules, active jobs and persisted quarantines in the same world.</p>
+<h2 id="projected-limits">Projected hard limits</h2>
+<p><code>max-modules</code> and <code>max-open-connectors</code> include queued, running, paused and otherwise recoverable jobs. Candidate connectors are added and the consumed parent connector is removed in the projection before admission. <code>max-radius</code> applies to every transformed corner.</p>
+<h2 id="block-checks">Block whitelist and double pass</h2>
+<p>An enabled whitelist rejects a candidate when a target block is not replaceable. Optional double-pass overlap can reconsider an overlap with an already generated parent/module using real world blocks. It requires block checking and never bypasses a pending job reservation.</p>
+<h2 id="lookahead">Bounded lookahead</h2>
+<p>Lookahead dry-runs future candidates to the configured depth with <code>ALL_CONNECTORS</code> or <code>ANY_CONNECTOR</code>. It is bounded by global node and time budgets. It does not mutate the world, reserve jobs, run real-block checks or replace closing behavior.</p>
+<h2 id="closing">Closing without destructive rollback</h2>
+<p>When enabled, a normal limit transition enters <code>CLOSING</code>. Closing entries must be endpoints with zero CONNECTOR markers. CoreStructuresX never removes generated modules automatically because prior blocks, fluids, NBT, entities, commands and later external edits cannot be restored losslessly.</p>
+<h2 id="last-write-check">Immediately-before-write check</h2>
+<p>When the pack enables block checking, the runtime performs another exact whitelist check immediately before each world write. A failure after mutation may quarantine the job footprint so later instances cannot overlap an uncertain region.</p>
+<hr>

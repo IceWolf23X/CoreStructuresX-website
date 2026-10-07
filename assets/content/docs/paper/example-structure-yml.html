@@ -1,0 +1,28 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>structure.yml</code> owns start, placement, generation mode, hard limits, completion, spatial checks and per-pack paste behavior.</p>
+<h2 id="bundled-example">Bundled example</h2>
+<div class="config-file-mount" data-config-file="paper/example-structure.yml"></div>
+<h2 id="identity-start">Identity and start</h2>
+<ul>
+<li><code>structure-version</code> must be 1.</li>
+<li><code>id</code> must equal <code>pack.yml.id</code>.</li>
+<li><code>enabled</code> defaults to true.</li>
+<li><code>start.mode</code> must be <code>MANUAL</code>; <code>start.group</code> must exist.</li>
+</ul>
+<h2 id="placement">Placement</h2>
+<p><code>native-facing</code> accepts NORTH, EAST, SOUTH or WEST. <code>offset.forward</code>, <code>left</code> and <code>right</code> are non-negative; <code>up</code> may be signed. Legacy <code>height</code> remains an alias for <code>up</code>.</p>
+<h2 id="generation">Generation</h2>
+<ul>
+<li><code>mode</code>: <code>AUTOMATIC</code> or <code>PLAYER_PROXIMITY</code>.</li>
+<li>Automatic order supports <code>NEAREST_TO_ORIGIN</code> then <code>FIFO</code>; <code>job-delay</code> is non-negative ticks.</li>
+<li>Lookahead depth is 0–10 and at least 1 when enabled; policy is <code>ALL_CONNECTORS</code> or <code>ANY_CONNECTOR</code>.</li>
+<li><code>backtrack-on-blocked</code> must remain false.</li>
+<li>Proximity check interval accepts ticks such as <code>20t</code>; default radius is non-negative.</li>
+</ul>
+<h2 id="limits-completion">Limits and completion</h2>
+<p><code>max-modules</code>, <code>max-radius</code> and <code>max-open-connectors</code> must be at least 1. <code>require-all-connectors-resolved</code> must remain true. <code>enter-closing-when-limits-reached</code> controls whether remaining connectors try closing groups.</p>
+<h2 id="space-check">Space checks</h2>
+<p>Overlap mode is <code>SCHEMATIC_BOUNDING_BOX</code>; padding is non-negative. Double pass requires enabled <code>WHITELIST</code> block checking. Replaceable materials and post-paste replacements must be valid Bukkit blocks.</p>
+<h2 id="paste">Per-pack paste</h2>
+<p>Mode must be <code>CHUNKED</code>. The pack block budget and per-instance active-job limit must be positive. <code>paste-air</code> controls source air; <code>paste-entities</code> opts into schematic entity placement.</p>
+<hr>

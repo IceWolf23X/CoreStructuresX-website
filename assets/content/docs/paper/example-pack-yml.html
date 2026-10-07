@@ -1,0 +1,23 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>pack.yml</code> names one structure pack and points to its structure, group, command and schematic resources.</p>
+<h2 id="bundled-example">Bundled example</h2>
+<div class="config-file-mount" data-config-file="paper/example-pack.yml"></div>
+<h2 id="schema">Schema</h2>
+<div class="table-scroll" role="region" tabindex="0" aria-label="pack.yml schema"><table>
+<thead><tr><th>Key</th><th>Rule</th></tr></thead>
+<tbody>
+<tr><td><code>pack-version</code></td><td>Must be 1.</td></tr>
+<tr><td><code>id</code></td><td>Required safe id. Duplicate ids disable every duplicate definition.</td></tr>
+<tr><td><code>name</code></td><td>Display name; defaults to id.</td></tr>
+<tr><td><code>version</code></td><td>Pack author's version string; defaults to 1.0.0.</td></tr>
+<tr><td><code>author</code></td><td>Defaults to unknown.</td></tr>
+<tr><td><code>structure</code></td><td>Defaults to structure.yml.</td></tr>
+<tr><td><code>groups</code></td><td>Defaults to groups.yml.</td></tr>
+<tr><td><code>commands</code></td><td>Defaults to commands.yml; file is optional until a COMMAND marker references a group.</td></tr>
+<tr><td><code>schematics-folder</code></td><td>Defaults to schematics.</td></tr>
+</tbody></table></div>
+<h2 id="path-safety">Path safety</h2>
+<p>Every referenced path must be relative and remain inside the pack after normalization and real-path resolution. Absolute paths, parent traversal and external symbolic-link/junction/reparse targets are rejected.</p>
+<h2 id="folder-name">Folder name</h2>
+<p>The folder may differ from <code>id</code>, but validation warns because matching names make administration clearer.</p>
+<hr>

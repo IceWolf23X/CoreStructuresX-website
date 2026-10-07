@@ -1,0 +1,22 @@
+<h2 id="before-repair">Before manual repair</h2>
+<ol>
+<li>Stop Paper.</li>
+<li>Back up the affected worlds.</li>
+<li>Back up the complete <code>plugins/CoreStructuresX/data/instances/</code> directory.</li>
+<li>Preserve the primary, rolling backup and every migration/invalid/corrupt evidence file.</li>
+</ol>
+<h2 id="atomic-saves">Atomic saves and rolling backup</h2>
+<p>A save writes and fsyncs <code>&lt;instance&gt;.json.tmp</code>, retains the previous valid primary as <code>&lt;instance&gt;.json.bak</code>, and atomically replaces the canonical file when supported. Filesystems without atomic move support use a same-directory replacement fallback.</p>
+<h2 id="corrupt-primary">Corrupt primary</h2>
+<p>If the primary cannot be parsed, the loader tries the rolling backup. A valid backup is accepted only when its instance id matches. The bad primary is preserved as <code>.json.corrupt</code> with a numeric suffix when needed, then the backup is restored through a flushed temporary file.</p>
+<h2 id="migration">Version migration</h2>
+<p>Unversioned data is treated as v1. Versions 1 through 4 are copied to <code>.json.vN.bak</code> before migration to v5. V1/v2 active jobs lack a trusted checksum journal and become failed with blocked processing connectors. V3 journals keep trusted checksum recovery state. V4 failed/active footprints are reconstructed conservatively.</p>
+<h2 id="invalid-files">Invalid and duplicate files</h2>
+<p>Unsafe ids, filename/id mismatches and duplicate instance ids are not loaded. Their canonical candidates are moved without overwrite to unique <code>.json.invalid[.N]</code> files so evidence is not lost.</p>
+<h2 id="failed-footprint">Failed-footprint quarantine</h2>
+<p>A failed job that may have mutated its bounded region keeps that region reserved in the world spatial index, including after restart. Inspect or repair the region first. Then run:</p>
+<pre tabindex="0"><code>/csx instance clear-footprint &lt;instance-id&gt; &lt;job-id&gt;</code></pre>
+<p>The command synchronously saves the removal of the reservation. It does not inspect, restore or delete any block, block entity or schematic entity.</p>
+<h2 id="no-backtracking">No destructive backtracking</h2>
+<p>Do not set <code>backtrack-on-blocked</code> true. Prior terrain, fluids, block-entity NBT, spawned entities, dispatched commands and later player/plugin changes cannot be reconstructed losslessly.</p>
+<hr>

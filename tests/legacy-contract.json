@@ -1,0 +1,50 @@
+{
+  "configuration.html": [
+    "site-navigation",
+    "main",
+    "global",
+    "markers",
+    "packs",
+    "commands",
+    "permissions",
+    "runtime"
+  ],
+  "docs.html": [
+    "site-navigation",
+    "main"
+  ],
+  "faq.html": [
+    "site-navigation",
+    "main"
+  ],
+  "features.html": [
+    "site-navigation",
+    "main",
+    "capabilities",
+    "limits"
+  ],
+  "installation.html": [
+    "site-navigation",
+    "main",
+    "setup",
+    "layout",
+    "authoring"
+  ],
+  "pack-authoring.html": [
+    "site-navigation",
+    "main",
+    "model",
+    "plan",
+    "layout",
+    "schematics",
+    "markers",
+    "pack-yml",
+    "structure-yml",
+    "groups-yml",
+    "commands-yml",
+    "safety",
+    "validate",
+    "diagnose",
+    "checklist"
+  ]
+}

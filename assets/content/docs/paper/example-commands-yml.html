@@ -1,0 +1,22 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>commands.yml</code> defines weighted command groups referenced by COMMAND marker line 3. The bundled test pack intentionally has no command groups.</p>
+<h2 id="bundled-example">Bundled example</h2>
+<div class="config-file-mount" data-config-file="paper/example-commands.yml"></div>
+<h2 id="schema">Schema</h2>
+<pre tabindex="0"><code>commands-version: 1
+groups:
+  finish_room:
+    entries:
+      - weight: 1
+        commands:
+          - "say module {module} finished at {world} {x} {y} {z}"</code></pre>
+<p>Each group needs at least one valid positive-weight entry. <code>commands</code> may be one string, a list, or a map whose values are non-empty strings. One leading slash is optional and removed before dispatch.</p>
+<h2 id="placeholders">Placeholders</h2>
+<pre tabindex="0"><code>{world} {x} {x+N} {y} {y+N} {z} {z+N}
+{instance} {module} {schematic} {group} {source_group}
+{uuid} {origin_x} {origin_y} {origin_z}</code></pre>
+<p>Coordinates are the transformed COMMAND marker position. Signed short offsets such as <code>{y-2}</code> are supported; out-of-range forms are left unchanged. The marker UUID is persisted across restarts.</p>
+<h2 id="delivery-semantics">Delivery semantics</h2>
+<p>Structural completion is committed first. Then the command record is marked consumed and saved before console dispatch. A crash after reservation but before Paper accepts the command can skip it; CoreStructuresX deliberately does not replay an external side effect.</p>
+<p>A false dispatch result or exception is logged and not counted as successful, but the reservation remains consumed.</p>
+<hr>

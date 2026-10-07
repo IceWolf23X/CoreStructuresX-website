@@ -1,0 +1,42 @@
+<h2 id="purpose">Purpose</h2>
+<p><code>config.yml</code> owns the global pack/storage folders, marker contract, validation policy, checkpoint cadence, shared paste budgets, schematic limits, bounded caches, lookahead budget and TPS/MSPT governor.</p>
+<h2 id="current-default">Current bundled default</h2>
+<div class="config-file-mount" data-config-file="paper/config.yml"></div>
+<h2 id="settings">settings and packs</h2>
+<ul>
+<li><code>config-version</code> must be <code>1</code>.</li>
+<li><code>settings.debug</code> enables global diagnostic logging.</li>
+<li><code>packs.folder</code> is resolved below the plugin data folder; administrator-configured external roots are trusted only when explicitly configured and accessible.</li>
+</ul>
+<h2 id="markers">markers</h2>
+<ul>
+<li><code>header</code> defaults to <code>[CSX]</code>.</li>
+<li><code>case-insensitive-header</code> defaults to true.</li>
+<li><code>replacements.ORIGIN</code>, <code>CONNECTOR</code> and <code>COMMAND</code> must name Bukkit block materials.</li>
+</ul>
+<h2 id="storage">storage</h2>
+<ul>
+<li><code>type</code> must be <code>JSON</code>.</li>
+<li><code>save-connectors</code> and <code>save-triggers</code> must remain true in v1.</li>
+<li><code>checkpoint-interval-ticks</code> and <code>checkpoint-operations</code> must each be at least 1.</li>
+<li><code>force-at-phase-boundaries</code> requests a checkpoint at paste phase transitions.</li>
+</ul>
+<h2 id="validation">validation</h2>
+<ul>
+<li><code>strict</code> rejects unknown fixed keys with the exact YAML path.</li>
+<li><code>require-origin</code> rejects missing ORIGIN markers when true; false uses the saved clipboard origin and reports a strict-mode warning.</li>
+<li><code>require-all-connectors-resolvable</code> requires every reachable connector group to have a finite endpoint path.</li>
+</ul>
+<h2 id="paste-budgets">performance.paste</h2>
+<p>Only <code>CHUNKED</code> is supported. <code>max-blocks-per-tick</code>, <code>max-milliseconds-per-tick</code>, <code>per-job-slice</code>, <code>max-active-jobs</code> and <code>max-chunk-loads-per-tick</code> are shared global budgets. Every value must be positive and the per-job slice cannot exceed the block budget.</p>
+<h2 id="schematic-limits">performance.schematics</h2>
+<p><code>max-axis</code>, <code>max-volume</code> and <code>max-chunks</code> reject oversized source/candidate geometry with overflow-safe checks. Chunk count uses the complete transformed bounding-box footprint.</p>
+<h2 id="schematic-cache">performance.schematic-cache</h2>
+<p>Compiled sources and transformed templates have independent entry and logical-weight bounds. <code>warmup-templates: false</code> compiles variants lazily. Enabling warmup checks all referenced rotations at load time but increases startup work; the same bounds still apply.</p>
+<h2 id="lookahead-budget">performance.lookahead</h2>
+<p><code>max-simulation-nodes</code> and <code>max-milliseconds</code> bound each dry-run search. Budget exhaustion rejects that candidate instead of continuing unbounded work.</p>
+<h2 id="stability">performance.stability</h2>
+<p>TPS and MSPT thresholds use hysteresis. Resume TPS must be at least the pause TPS, resume MSPT must be no greater than pause MSPT, and both the sampling interval and stable-sample count must be positive.</p>
+<h2 id="upgrade-note">Upgrade note</h2>
+<p>Existing server YAML is not merged with newly bundled defaults. Compare the installed file with this current snapshot after each update and add keys deliberately.</p>
+<hr>

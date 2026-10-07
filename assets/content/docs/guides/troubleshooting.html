@@ -1,0 +1,17 @@
+<h2 id="startup">Plugin disables on startup</h2>
+<p>Confirm Java 21+, a compatible Paper build, and a loaded WorldEdit or FastAsyncWorldEdit provider. When the API is absent, CoreStructuresX logs the exact dependency error and disables itself safely.</p>
+<h2 id="pack-not-listed">Pack is not listed</h2>
+<p>Confirm the folder is a normal direct child of <code>packs/</code>, contains <code>pack.yml</code>, uses a unique safe id, and does not escape through configured paths or filesystem links. Run validation and inspect the complete path in each diagnostic.</p>
+<h2 id="schematic-invalid">Schematic fails validation</h2>
+<p>Check provider readability, configured axis/volume/chunk limits, ORIGIN count, connector/command group ids, positive proximity radii and referenced material names.</p>
+<h2 id="does-not-expand">Structure starts but does not expand</h2>
+<p>Use <code>/csx instance info</code>. Inspect instance state, active jobs, open/blocked connectors, mode, generated count and quarantine count. Automatic mode may be waiting for stable TPS/MSPT samples or job delay. Proximity mode requires the player in the same world and the specific trigger active.</p>
+<h2 id="overlap">Candidate rejected for overlap</h2>
+<p>Its transformed bounds intersect a generated module, pending job or persisted failed footprint. Move markers, shrink the schematic, add fallback/endpoint candidates, or enable a carefully bounded double pass with block checking. Pending jobs cannot be bypassed.</p>
+<h2 id="blocked">Instance is BLOCKED</h2>
+<p>At least one connector could not be resolved. Read the recorded reason and repair the candidate set, fallback/closing graph, overlap geometry, whitelist or lookahead constraint. CoreStructuresX does not delete prior modules to retry.</p>
+<h2 id="json">JSON cannot be loaded</h2>
+<p>Stop Paper and back up the complete instances folder. The loader first tries the rolling <code>.json.bak</code>. If recovery cannot be completed, preserve the primary and backup, inspect the error, and repair or move the broken canonical file aside. Do not edit live state.</p>
+<h2 id="quarantine">Failed footprint remains reserved</h2>
+<p>Inspect or repair the exact world region shown by <code>/csx instance info</code>. Only then use <code>/csx instance clear-footprint &lt;instance-id&gt; &lt;job-id&gt;</code>. The command releases the collision reservation; it does not inspect or fix blocks or entities.</p>
+<hr>

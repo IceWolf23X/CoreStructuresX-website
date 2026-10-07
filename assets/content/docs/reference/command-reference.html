@@ -1,0 +1,22 @@
+<div class="table-scroll" role="region" tabindex="0" aria-label="CoreStructuresX command reference"><table>
+<thead><tr><th>Command</th><th>Permission</th><th>Behavior</th></tr></thead>
+<tbody>
+<tr><td><code>/csx</code></td><td>None for help</td><td>Shows the administrative command list.</td></tr>
+<tr><td><code>/csx reload</code></td><td><code>corestructuresx.admin.reload</code></td><td>Reloads config and packs only when no paste job is queued, running, paused or finalizing.</td></tr>
+<tr><td><code>/csx validate [pack &lt;pack-id&gt;]</code></td><td><code>corestructuresx.admin.validate</code></td><td>Shows aggregate or complete selected-pack validation diagnostics.</td></tr>
+<tr><td><code>/csx packs list</code></td><td><code>corestructuresx.admin.packs</code></td><td>Lists pack identity, validation state and schematic count.</td></tr>
+<tr><td><code>/csx start &lt;pack-id&gt; [group-id] [world x y z facing] [automatic|proximity &lt;radius&gt;] [debug|verbose] [actionbar]</code></td><td><code>corestructuresx.admin.start</code></td><td>Starts one instance with optional group, location, mode and monitoring overrides.</td></tr>
+<tr><td><code>/csx instances list</code></td><td><code>corestructuresx.admin.instances</code></td><td>Lists state, pack, progress, elapsed time, modules and open connectors.</td></tr>
+<tr><td><code>/csx instance info &lt;instance-id&gt;</code></td><td><code>corestructuresx.admin.instances</code></td><td>Shows lifecycle, mode, progress, jobs, quarantines, triggers, modules and blocked connectors.</td></tr>
+<tr><td><code>/csx instance pause &lt;instance-id&gt;</code></td><td><code>corestructuresx.admin.instances</code></td><td>Persists PAUSED state, preserves cursors and releases owned chunk tickets.</td></tr>
+<tr><td><code>/csx instance resume &lt;instance-id&gt;</code></td><td><code>corestructuresx.admin.instances</code></td><td>Resumes only a valid PAUSED graph.</td></tr>
+<tr><td><code>/csx instance stop &lt;instance-id&gt;</code></td><td><code>corestructuresx.admin.instances</code></td><td>Moves an idle instance to terminal STOPPED without deleting world content.</td></tr>
+<tr><td><code>/csx instance clear-footprint &lt;instance-id&gt; &lt;job-id&gt;</code></td><td><code>corestructuresx.admin.instances</code></td><td>After operator inspection, releases one persisted FAILED-job collision reservation.</td></tr>
+</tbody></table></div>
+<h2 id="start-sender">Start sender rules</h2>
+<p>A player may omit location; the command uses the player's block position and snaps yaw to a cardinal facing. Console must supply world, integer x/y/z and NORTH, EAST, SOUTH or WEST. <code>actionbar</code> requires a player sender.</p>
+<h2 id="mode-overrides">Mode overrides</h2>
+<p><code>automatic</code>/<code>auto</code> and <code>proximity</code>/<code>player_proximity</code>/<code>player-proximity &lt;radius&gt;</code> are accepted. The optional word <code>type</code> is accepted before the mode. Overrides are stored on the instance and do not edit <code>structure.yml</code>.</p>
+<h2 id="lifecycle-safety">Lifecycle safety</h2>
+<p>Pause does not make reload safe. Stop is rejected while an active or finalizing job exists. Clear-footprint applies only to a failed quarantined job and never repairs the world.</p>
+<hr>

@@ -1,0 +1,91 @@
+groups-version: 1
+
+groups:
+  init:
+    entries:
+      - schematic: start_01.schem
+        weight: 2
+    fallback-groups:
+      - rooms
+      - endpoints
+    closing-groups:
+      - rooms
+      - endpoints
+
+  path:
+    entries:
+      - schematic: corridor_01.schem
+        weight: 18
+#      - schematic: stairs_01.schem
+#        weight: 7
+#        offset:
+#          forward: 1
+#          left: 0
+#          right: 0
+#          up: 1
+      - schematic: stairs_02.schem
+        weight: 9
+        offset:
+          forward: 1
+          left: 0
+          right: 0
+          up: -1
+      - schematic: corner_01.schem
+        weight: 4
+      - schematic: corner_02.schem
+        weight: 4
+      - schematic: split_01.schem
+        weight: 4
+      - schematic: split_02.schem
+        weight: 4
+#      - schematic: split_03.schem
+#        weight: 7
+      - schematic: split_04.schem
+        weight: 7
+      - schematic: room_01.schem
+        weight: 1
+      - schematic: room_02.schem
+        weight: 1
+    fallback-groups:
+      - rooms
+      - endpoints
+    closing-groups:
+      - rooms
+      - endpoints
+
+  cool:
+    entries:
+      - schematic: corridor_01.schem
+        weight: 18
+      - schematic: room_01.schem
+        weight: 1
+      - schematic: room_02.schem
+        weight: 1
+    fallback-groups:
+      - rooms
+      - endpoints
+    closing-groups:
+      - rooms
+      - endpoints
+
+  rooms:
+    entries:
+      - schematic: endpoint_01.schem
+        weight: 8
+      - schematic: room_01.schem
+        weight: 1
+      - schematic: room_02.schem
+        weight: 1
+    fallback-groups: []
+    closing-groups: []
+
+  endpoints:
+    entries:
+      - schematic: endpoint_01.schem
+        weight: 8
+      - schematic: room_01.schem
+        weight: 1
+      - schematic: room_02.schem
+        weight: 1
+    fallback-groups: []
+    closing-groups: []

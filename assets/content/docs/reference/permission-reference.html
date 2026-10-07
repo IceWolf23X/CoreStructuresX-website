@@ -1,0 +1,18 @@
+<h2 id="umbrella">Umbrella permission</h2>
+<pre tabindex="0"><code>corestructuresx.admin</code></pre>
+<p>This node grants every administrative child and defaults to operators.</p>
+<h2 id="children">Individual permissions</h2>
+<pre tabindex="0"><code>corestructuresx.admin.reload
+corestructuresx.admin.validate
+corestructuresx.admin.packs
+corestructuresx.admin.start
+corestructuresx.admin.instances</code></pre>
+<p>Every child also defaults to operators. Each command handler accepts either its specific child or the umbrella permission.</p>
+<h2 id="recommended-split">Recommended split</h2>
+<p>Builders may receive validation and pack listing without start or instance mutation. Restrict start, pause/resume/stop and clear-footprint to trusted administrators because they can paste content or change live recovery reservations.</p>
+<pre tabindex="0"><code>lp group builder permission set corestructuresx.admin.validate true
+lp group builder permission set corestructuresx.admin.packs true
+lp group admin permission set corestructuresx.admin true</code></pre>
+<h2 id="command-markers">Command marker trust</h2>
+<p>Permission nodes control the CoreStructuresX admin command. They do not sandbox console commands authored inside a pack. Limit filesystem and pack-authoring access separately.</p>
+<hr>

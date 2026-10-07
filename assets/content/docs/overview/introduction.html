@@ -1,0 +1,20 @@
+<p>CoreStructuresX 2026.1.1 is a Paper plugin for manual-start modular structures. Administrators assemble structure packs from WorldEdit or FastAsyncWorldEdit schematics, validate the pack, and choose the location and facing of the first module.</p>
+<h2 id="what-it-does">What it does</h2>
+<ul>
+<li>Loads versioned YAML pack definitions and referenced <code>.schem</code> modules.</li>
+<li>Reads <code>[CSX]</code> ORIGIN, CONNECTOR and COMMAND marker signs.</li>
+<li>Selects weighted schematic candidates, then tries configured fallback and closing groups.</li>
+<li>Expands automatically or from a saved player-proximity trigger.</li>
+<li>Applies world-wide overlap checks, optional block whitelists, projected hard limits and bounded lookahead.</li>
+<li>Persists modules, connectors, triggers, commands and paste progress as data-version-5 JSON.</li>
+</ul>
+<h2 id="current-stack">Current stack</h2>
+<p>The build targets Java 21, Paper API 1.21.11 and WorldEdit Bukkit 7.4.3. At runtime, install WorldEdit or FastAsyncWorldEdit. Those coordinates describe the current build boundary; test the exact Paper and schematic-provider builds used by your server.</p>
+<h2 id="start-here">Start here</h2>
+<ol>
+<li>Read <a href="#/docs/instructions/before-you-configure">Before you configure</a>.</li>
+<li>Follow <a href="#/docs/instructions/quick-install-patterns">Install and first test</a>.</li>
+<li>Validate the bundled <code>csx_test_pack</code>.</li>
+<li>Use the <a href="#/docs/guides/pack-authoring">pack authoring guide</a> for your own graph.</li>
+</ol>
+<hr>

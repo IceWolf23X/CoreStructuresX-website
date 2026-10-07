@@ -1,0 +1,15 @@
+<h2 id="capabilities">Structure generation capabilities</h2>
+<p>CoreStructuresX combines marked schematics, weighted module groups, two expansion modes, bounded chunked paste jobs and durable recovery state.</p>
+<h2 id="marked-schematics">Marked schematics</h2>
+<p>A schematic may define one explicit ORIGIN, any number of one-use CONNECTOR markers, and optional COMMAND markers. CoreStructuresX transforms marker positions, block states, block-entity NBT and optional entities with the module rotation.</p>
+<h2 id="automatic-generation">Automatic generation</h2>
+<p><code>AUTOMATIC</code> mode selects open connectors in the supported nearest-to-origin then FIFO order. The configured delay counts only stable scheduler samples. TPS or MSPT instability pauses progress and durably resets the remaining delay to the configured value.</p>
+<h2 id="player-proximity">Player proximity</h2>
+<p><code>PLAYER_PROXIMITY</code> mode saves a trigger for each eligible connector or command. A player must enter that trigger's positive radius in the same world. Each trigger activates only its own connector or command; marker signs do not need to remain in the pasted world.</p>
+<h2 id="weighted-groups">Weighted groups</h2>
+<p>Each connector names a group. That group supplies weighted schematic entries. If normal candidates fail, fallback groups are tried in order. When a hard limit is reached, endpoint-only closing groups can resolve remaining connectors without deleting prior modules.</p>
+<h2 id="command-markers">Command markers</h2>
+<p>A COMMAND marker chooses one weighted command entry and dispatches its commands as the server console. Immediate commands run after durable module finalization. Proximity commands wait for their saved trigger. Consumption is persisted before dispatch, providing at-most-once behavior.</p>
+<h2 id="chunked-paste">Chunked paste</h2>
+<p>Paste jobs advance through block, block-entity NBT and optional entity phases under shared operation, time, job and chunk-load budgets. Jobs keep only a bounded window of plugin chunk tickets and release those tickets when paused, failed, stopped or shut down.</p>
+<hr>

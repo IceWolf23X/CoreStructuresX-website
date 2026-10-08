@@ -3,6 +3,26 @@ window.COREX_RELEASES = {
   "schemaVersion": 2,
   "provider": "github",
   "repository": "IceWolf23X/CoreStructuresX-website",
-  "generatedAt": "2026-10-07T21:45:57.486Z",
-  "releases": []
+  "generatedAt": "2026-10-08T00:39:12.947Z",
+  "releases": [
+    {
+      "tag_name": "v2026.1.0",
+      "name": "CoreStructuresX 2026.1.0 (Alpha)",
+      "body": "# CoreStructuresX 2026.1.0\n\n## Added\n\n- Added manual-start modular structure generation from validated WorldEdit or FAWE schematic packs with `[CSX]` markers.\n- Added `AUTOMATIC` and `PLAYER_PROXIMITY` expansion modes with persistent JSON instances, connectors, triggers, commands, and generated-module history.\n- Added `/csx validate`, `/csx packs list`, `/csx start`, `/csx instances list`, and `/csx instance \u003cinfo|pause|resume|stop>` administration workflows.\n- Added overlap checks, optional block whitelists, lookahead and fallback groups, chunked pastes, TPS/MSPT gates, and per-instance generation limits.\n- Added anonymous bStats reporting for Paper/Purpur.\n\n## Compatibility\n\n- Requires Paper `1.21.11+`, Java `21+`, and a loaded WorldEdit or FastAsyncWorldEdit implementation.\n- Metrics use the server-wide bStats setting in `plugins/bStats/config.yml`; no CoreStructuresX metrics key is required.\n",
+      "html_url": "https://github.com/IceWolf23X/CoreStructuresX-website/releases/tag/v2026.1.0",
+      "draft": false,
+      "prerelease": true,
+      "published_at": "2026-10-08T00:38:59Z",
+      "assets": [
+        {
+          "name": "CoreStructuresX-2026.1.0.jar",
+          "state": "uploaded",
+          "size": 890964,
+          "digest": "sha256:fe46dd5a4709531c0eab56e999c5066fcd187de26d3090e771b2ea458a60563c",
+          "browser_download_url": "https://github.com/IceWolf23X/CoreStructuresX-website/releases/download/v2026.1.0/CoreStructuresX-2026.1.0.jar",
+          "download_count": 0
+        }
+      ]
+    }
+  ]
 };

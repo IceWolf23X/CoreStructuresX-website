@@ -60,3 +60,7 @@ Serve the repository root with a static HTTP server, then open `index.html`. The
 ## Verification
 
 Use the project-provided Node tests and bundle checks after changing source content. Generated files are outputs; edit the data catalog, article fragments or synchronized snapshots instead.
+
+## Privacy and sitemap
+
+See [Privacy and crawl-discovery maintenance](docs/PRIVACY_AND_SEO.md) for editable notice content, controller/contact, canonical page inventory and required generation checks.

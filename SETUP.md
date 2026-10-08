@@ -52,3 +52,7 @@ Never place credentials in:
 Edit landing copy in `assets/js/data/landing-content.js`. Add or reorder articles in `assets/js/data/docs-content.js`; each article body must live at `assets/content/docs/<article-id>.html`. Article ids allow lowercase letters, digits, hyphens and path separators. Configuration ids may preserve YAML filenames and underscores.
 
 After an article edit, rebuild the documentation bundle. After an allowlisted plugin default changes, rerun all three preparation commands.
+
+## Privacy and sitemap
+
+See [Privacy and crawl-discovery maintenance](docs/PRIVACY_AND_SEO.md) for editable notice content, controller/contact, canonical page inventory and required generation checks.

@@ -3,7 +3,7 @@ window.COREX_RELEASES = {
   "schemaVersion": 2,
   "provider": "github",
   "repository": "IceWolf23X/CoreStructuresX-website",
-  "generatedAt": "2026-10-08T00:39:12.947Z",
+  "generatedAt": "2026-10-08T10:38:00.122Z",
   "releases": [
     {
       "tag_name": "v2026.1.0",
@@ -20,7 +20,7 @@ window.COREX_RELEASES = {
           "size": 890964,
           "digest": "sha256:fe46dd5a4709531c0eab56e999c5066fcd187de26d3090e771b2ea458a60563c",
           "browser_download_url": "https://github.com/IceWolf23X/CoreStructuresX-website/releases/download/v2026.1.0/CoreStructuresX-2026.1.0.jar",
-          "download_count": 0
+          "download_count": 1
         }
       ]
     }
